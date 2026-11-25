@@ -33,7 +33,6 @@ Organized by AWS First Cloud Journey AI (FCAJ) together with CMC Global to open 
 
 The event ended with a lucky draw on Wheel of Names; the prize was a Logitech MK250 keyboard and mouse set.
 
-<!-- draft: the two sections below were written by Claude from the agenda session titles, not from my own notes. Edit them. -->
 ### What I learned
 
 - The talkshow on how to think about building a bot: before picking a model, decide what problem the bot solves, for whom, and what it does when it is not sure.

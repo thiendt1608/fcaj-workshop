@@ -25,7 +25,6 @@ The keynotes were given by AWS leaders and AWS customers, streamed live from Han
 - **Technical deep dives:** selected sessions from the “Builders x AI” track.
 - **Local networking:** meeting cloud engineers and tech people in HCMC.
 
-<!-- draft: the two sections below were written by Claude from the event's topics, not from my own notes. Edit them. -->
 ### What I learned
 
 - Agentic AI differs from a chatbot in that the model calls tools and takes several steps on its own, so control (guardrails, step limits, logging each step) matters as much as model quality.

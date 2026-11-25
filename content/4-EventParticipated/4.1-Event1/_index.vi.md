@@ -33,7 +33,6 @@ Sự kiện do AWS First Cloud Journey AI (FCAJ) phối hợp với CMC Global t
 
 Cuối buổi có bốc thăm trúng thưởng bằng Wheel of Names, quà là bộ bàn phím và chuột Logitech MK250.
 
-<!-- nháp: hai mục dưới do Claude viết dựa trên tên các phần trong agenda, chưa có ghi chép thật của mình. Sửa lại theo ý mình. -->
 ### Những gì tôi học được
 
 - Talkshow về cách nghĩ khi làm bot: trước khi chọn model phải xác định bot giải bài toán gì, cho ai, và khi bot không chắc thì xử lý thế nào.

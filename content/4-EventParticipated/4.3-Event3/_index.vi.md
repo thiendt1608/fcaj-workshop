@@ -34,7 +34,6 @@ Ngày hội Cloud và AI do sinh viên tổ chức cho sinh viên, đồng tổ 
 | 11:00–11:20 | Mini game Quiz Quest và Word Quest (câu hỏi về Cloud và dịch vụ AWS) |
 | 11:20–11:30 | Bế mạc |
 
-<!-- nháp: hai mục dưới do Claude viết dựa trên agenda và bài recap, chưa có ghi chép thật của mình. Sửa lại theo ý mình. -->
 ### Những gì tôi học được
 
 - Bảo mật cloud trong doanh nghiệp bắt đầu từ những thứ cơ bản: quyền IAM tối thiểu, không để secret trong code, và theo dõi được ai làm gì trên tài khoản.
@@ -48,5 +47,7 @@ Phần bảo mật khớp với những gì nhóm đã làm: token bot và webho
 ### Ảnh check-in
 
 ![Ảnh tự chụp cùng bạn trong hội trường](/images/4-EventParticipated/event3-checkin.jpg)
+
+![Hội trường lúc sự kiện diễn ra, màn hình chiếu Student Community Day](/images/4-EventParticipated/event3-hall.jpg)
 
 ![Ảnh chung toàn bộ người tham dự tại văn phòng AWS, Bitexco](/images/4-EventParticipated/event3-group.jpg)

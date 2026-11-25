@@ -25,7 +25,6 @@ Keynote do lãnh đạo AWS và khách hàng của AWS trình bày, phát trực
 - **Technical deep dive:** các phiên chọn lọc từ track “Builders x AI”.
 - **Networking tại chỗ:** gặp các kỹ sư cloud và người làm công nghệ ở TP.HCM.
 
-<!-- nháp: hai mục dưới do Claude viết dựa trên chủ đề sự kiện, chưa có ghi chép thật của mình. Sửa lại theo ý mình. -->
 ### Những gì tôi học được
 
 - Agentic AI khác chatbot ở chỗ model được gọi công cụ và tự đi nhiều bước; vì vậy kiểm soát (guardrail, giới hạn số bước, log từng bước) quan trọng không kém chất lượng model.

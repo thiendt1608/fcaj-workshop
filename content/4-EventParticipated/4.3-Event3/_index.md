@@ -34,7 +34,6 @@ A Cloud and AI day built by students for students, co-organized by 4 AWS Student
 | 11:00–11:20 | Mini games Quiz Quest and Word Quest (questions on Cloud and AWS services) |
 | 11:20–11:30 | Closing |
 
-<!-- draft: the two sections below were written by Claude from the agenda and the recap post, not from my own notes. Edit them. -->
 ### What I learned
 
 - Enterprise cloud security starts with the basics: least-privilege IAM, no secrets in code, and being able to see who did what in the account.
@@ -48,5 +47,7 @@ The security talk matches what the team already does: the bot token and webhook 
 ### Check-in photo
 
 ![Selfie with friends in the event hall](/images/4-EventParticipated/event3-checkin.jpg)
+
+![The hall during the event, with Student Community Day on the screens](/images/4-EventParticipated/event3-hall.jpg)
 
 ![Group photo of all attendees at the AWS office, Bitexco](/images/4-EventParticipated/event3-group.jpg)
