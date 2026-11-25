@@ -100,7 +100,7 @@ sam deploy --parameter-overrides \
 Nếu muốn xem lại từng thiết lập, chạy `sam deploy --guided` và trả lời: Stack Name `askfirst-dev`, Region `ap-southeast-1`, Parameter Stage `dev`, Allow SAM CLI IAM role creation `Y`, **"WebhookFunction has no authentication. Is this okay?" `Y`** (Function URL bắt buộc công khai; header secret được kiểm tra bên trong function), Save arguments to configuration file `Y`.
 
 <!-- TODO screenshot: output terminal của `sam deploy` với các CloudFormation event và dòng "Successfully created/updated stack - askfirst-dev" -->
-<!-- TODO screenshot: CloudFormation console, stack askfirst-dev ở trạng thái CREATE_COMPLETE, mở tab Resources -->
+![Stack askfirst-dev, tab Resources: 23 resource đều CREATE_COMPLETE. Stack đã được update nhiều lần nên trạng thái stack là UPDATE_COMPLETE](/images/5-Workshop/5.3/cfn-stack-resources.jpg)
 
 #### Bước 6: Lấy output của stack
 
@@ -146,9 +146,9 @@ aws ssm get-parameters-by-path --region "$AWS_REGION" --path "/askfirst/$STAGE" 
   --query "Parameters[*].[Name,Type]" --output table
 ```
 
-<!-- TODO screenshot: Lambda console lọc theo "askfirst-dev", thấy webhook, worker và worker-dlq -->
-<!-- TODO screenshot: DynamoDB console, bảng askfirst-dev, tab "Additional settings" cho thấy TTL và PITR đã bật -->
-<!-- TODO screenshot: SQS console liệt kê askfirst-dev-jobs và askfirst-dev-jobs-dlq -->
+![Lambda console lọc theo askfirst-dev: webhook, worker, worker-dlq (Java 21) và ai (image)](/images/5-Workshop/5.3/lambda-functions.jpg)
+![Bảng askfirst-dev: Point-in-time recovery On, Time to Live On (mục Additional info)](/images/5-Workshop/5.3/dynamodb-ttl-pitr.jpg)
+![SQS console: askfirst-dev-jobs và askfirst-dev-jobs-dlq](/images/5-Workshop/5.3/sqs-queues.jpg)
 
 Bản thân webhook được kiểm tra ở 5.5, sau khi bot token và webhook secret đã nằm trong SSM; trước đó function `webhook` chưa khởi động được.
 

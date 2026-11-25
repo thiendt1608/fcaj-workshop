@@ -38,7 +38,7 @@ aws logs tail /aws/lambda/askfirst-dev-worker --since 1h --follow
 
 Trên console: **CloudWatch → Logs → Log groups → `/aws/lambda/askfirst-dev-worker` → Search log group**.
 
-<!-- TODO screenshot: danh sách Log groups lọc theo "askfirst-dev" -->
+![Log groups của stack: /aws/lambda/askfirst-dev-ai, webhook, worker, worker-dlq](/images/5-Workshop/5.7/log-groups.jpg)
 
 #### 5.7.2 Truy vấn CloudWatch Logs Insights
 
@@ -80,7 +80,7 @@ filter @message like /ai_invoke/
 | limit 50
 ```
 
-<!-- TODO screenshot: kết quả câu truy vấn cold start trên log group ai -->
+![Kết quả truy vấn cold start trên log group ai (2 tuần): 21 lần, p50 6,4 s, p95 8,6 s, max 8,9 s](/images/5-Workshop/5.7/logs-insights-cold-start.jpg)
 
 #### 5.7.3 Metric có sẵn
 
@@ -91,7 +91,7 @@ Lambda và SQS tự gửi metric, không cần code. Vào **CloudWatch → Metri
 
 Console Lambda cũng hiện các metric này ở **Lambda → Functions → `askfirst-dev-worker` → Monitor**.
 
-<!-- TODO screenshot: tab Monitor của askfirst-dev-worker (Invocations, Duration, Errors) -->
+![Tab Monitor của askfirst-dev-worker trong 1 tuần: Invocations, Duration, Errors bằng 0](/images/5-Workshop/5.7/worker-monitor.jpg)
 
 #### 5.7.4 Alarm DLQ
 
@@ -104,7 +104,7 @@ aws cloudwatch describe-alarms --alarm-names askfirst-dev-jobs-dlq-not-empty \
 
 Muốn thấy alarm bật, chạy bài kiểm tra DLQ ở 5.6.4.
 
-<!-- TODO screenshot: trang CloudWatch Alarms có askfirst-dev-jobs-dlq-not-empty (OK hoặc In alarm) -->
+![Alarm askfirst-dev-jobs-dlq-not-empty ở trạng thái OK. Môi trường dev của nhóm chưa gắn SNS action nên cột Actions là No actions](/images/5-Workshop/5.7/alarms.jpg)
 
 #### 5.7.5 Tuỳ chọn: email qua SNS
 

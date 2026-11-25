@@ -100,7 +100,7 @@ sam deploy --parameter-overrides \
 If you prefer to review each setting, run `sam deploy --guided` instead and answer: Stack Name `askfirst-dev`, Region `ap-southeast-1`, Parameter Stage `dev`, Allow SAM CLI IAM role creation `Y`, **"WebhookFunction has no authentication. Is this okay?" `Y`** (the Function URL must be public; the secret header is checked inside the function), Save arguments to configuration file `Y`.
 
 <!-- TODO screenshot: terminal output of `sam deploy` showing the CloudFormation events and "Successfully created/updated stack - askfirst-dev" -->
-<!-- TODO screenshot: CloudFormation console, stack askfirst-dev in CREATE_COMPLETE with the Resources tab open -->
+![Stack askfirst-dev, Resources tab: all 23 resources CREATE_COMPLETE. The stack has been updated several times, so its own status is UPDATE_COMPLETE](/images/5-Workshop/5.3/cfn-stack-resources.jpg)
 
 #### Step 6: Read the stack outputs
 
@@ -146,9 +146,9 @@ aws ssm get-parameters-by-path --region "$AWS_REGION" --path "/askfirst/$STAGE" 
   --query "Parameters[*].[Name,Type]" --output table
 ```
 
-<!-- TODO screenshot: Lambda console filtered by "askfirst-dev" showing webhook, worker and worker-dlq -->
-<!-- TODO screenshot: DynamoDB console, table askfirst-dev, "Additional settings" tab showing TTL and PITR on -->
-<!-- TODO screenshot: SQS console listing askfirst-dev-jobs and askfirst-dev-jobs-dlq -->
+![Lambda console filtered by askfirst-dev: webhook, worker, worker-dlq (Java 21) and ai (image)](/images/5-Workshop/5.3/lambda-functions.jpg)
+![Table askfirst-dev: point-in-time recovery On and Time to Live On (Additional info section)](/images/5-Workshop/5.3/dynamodb-ttl-pitr.jpg)
+![SQS console: askfirst-dev-jobs and askfirst-dev-jobs-dlq](/images/5-Workshop/5.3/sqs-queues.jpg)
 
 The webhook itself is checked in 5.5, after the bot token and webhook secret are stored in SSM; until then the `webhook` function cannot start.
 

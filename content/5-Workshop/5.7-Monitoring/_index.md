@@ -38,7 +38,7 @@ aws logs tail /aws/lambda/askfirst-dev-worker --since 1h --follow
 
 In the console: **CloudWatch → Logs → Log groups → `/aws/lambda/askfirst-dev-worker` → Search log group**.
 
-<!-- TODO screenshot: CloudWatch Log groups list filtered by "askfirst-dev" -->
+![The stack's log groups: /aws/lambda/askfirst-dev-ai, webhook, worker, worker-dlq](/images/5-Workshop/5.7/log-groups.jpg)
 
 #### 5.7.2 CloudWatch Logs Insights queries
 
@@ -80,7 +80,7 @@ filter @message like /ai_invoke/
 | limit 50
 ```
 
-<!-- TODO screenshot: Logs Insights result of the cold-start query on the ai log group -->
+![Cold-start query result on the ai log group (2 weeks): 21 cold starts, p50 6.4 s, p95 8.6 s, max 8.9 s](/images/5-Workshop/5.7/logs-insights-cold-start.jpg)
 
 #### 5.7.3 Built-in metrics
 
@@ -91,7 +91,7 @@ Lambda and SQS publish metrics without any code. In **CloudWatch → Metrics →
 
 The Lambda console also shows these under **Lambda → Functions → `askfirst-dev-worker` → Monitor**.
 
-<!-- TODO screenshot: Lambda Monitor tab of askfirst-dev-worker (Invocations, Duration, Errors) -->
+![Monitor tab of askfirst-dev-worker over 1 week: Invocations, Duration, zero Errors](/images/5-Workshop/5.7/worker-monitor.jpg)
 
 #### 5.7.4 The DLQ alarm
 
@@ -104,7 +104,7 @@ aws cloudwatch describe-alarms --alarm-names askfirst-dev-jobs-dlq-not-empty \
 
 To see it fire, use the DLQ test in 5.6.4.
 
-<!-- TODO screenshot: CloudWatch Alarms page showing askfirst-dev-jobs-dlq-not-empty (OK or In alarm) -->
+![Alarm askfirst-dev-jobs-dlq-not-empty in OK state. The team's dev environment has no SNS action attached yet, so Actions shows No actions](/images/5-Workshop/5.7/alarms.jpg)
 
 #### 5.7.5 Optional: email notification through SNS
 

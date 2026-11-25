@@ -134,7 +134,7 @@ export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-
 ```
 
 <!-- TODO screenshot: lần chạy "AI image" (workflow_dispatch) trên GitHub Actions, mọi bước xanh, summary có dung lượng image và dòng Deploy (làm mờ account ID) -->
-<!-- TODO screenshot: ECR console, repository askfirst-ai có tag image vừa đẩy -->
+![ECR console: các image đã đẩy, tag theo commit. Môi trường dev hiện tại của nhóm dùng repository askfirst-dev-ai, khác tên askfirst-ai mà stack askfirst-github-oidc tạo](/images/5-Workshop/5.4/ecr-images.jpg)
 
 <!-- TODO(not verified): build trên máy bằng `docker build -f ai/Dockerfile -t askfirst-ai .` (thêm `--platform linux/amd64` trên Apple Silicon) rồi docker login/tag/push như bước Push của workflow. Dockerfile ghi là build trên GitHub Actions; team chưa dùng cách build trên máy. -->
 
@@ -158,7 +158,9 @@ Lúc này CloudFormation tạo `askfirst-dev-ai` với alias `live`. `worker` v�
 Nếu pipeline thật lỗi mà bạn cần bot chạy thông từ đầu đến cuối trước, hãy deploy lại và thêm `AiPipelineImpl=stub`. Bản stub trả lời theo bộ luật từ khoá cố định, không tải media và không gọi mạng (không OCR, không Bedrock), chỉ dành cho bot `dev`. Bỏ tham số này (hoặc đặt `AiPipelineImpl=real`) khi pipeline thật đã chạy.
 {{% /notice %}}
 
-<!-- TODO screenshot: Lambda console, function askfirst-dev-ai, tab "Image" có URI image ECR và tab Aliases có live -->
+![Function askfirst-dev-ai, tab Code: Image URI trỏ tới ECR, kiến trúc x86_64](/images/5-Workshop/5.4/lambda-ai-image.jpg)
+
+![Alias live trỏ tới version đã publish](/images/5-Workshop/5.4/lambda-ai-alias.jpg)
 
 #### Bước 6: Kiểm tra AI function
 
@@ -181,7 +183,7 @@ rm -f req.json
 aws logs tail /aws/lambda/askfirst-dev-ai --region ap-southeast-1 --since 10m
 ```
 
-<!-- TODO screenshot: CloudWatch Logs của askfirst-dev-ai ở lần invoke đầu (init duration và tải artifact) -->
+![Logs Insights trên /aws/lambda/askfirst-dev-ai: các dòng REPORT có @initDuration khoảng 8,4–8,6 s, max memory khoảng 0,9 GB](/images/5-Workshop/5.4/ai-init-duration.jpg)
 
 #### Tuỳ chọn: Bedrock ở tài khoản AWS khác
 

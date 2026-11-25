@@ -43,7 +43,7 @@ aws ssm get-parameters-by-path --region "$AWS_REGION" --path "/askfirst/$STAGE" 
   --query "Parameters[*].[Name,Type]" --output table
 ```
 
-<!-- TODO screenshot: Systems Manager → Parameter Store lọc theo /askfirst/dev, thấy bot_token và webhook_secret là SecureString (giá trị bị ẩn) -->
+![Parameter Store lọc theo /askfirst/dev: bot_token và webhook_secret là SecureString](/images/5-Workshop/5.5/ssm-parameters.jpg)
 
 {{% notice warning %}}
 Không bao giờ in các giá trị này ra, đưa vào ảnh chụp màn hình hay commit. `--with-decryption` sẽ hiện giá trị gốc, nên chỉ dùng nó bên trong command substitution như bên dưới. Nếu token hoặc secret bị lộ, thu hồi token với BotFather (`/revoke`), lưu giá trị mới và làm lại bước 1 và bước 3.

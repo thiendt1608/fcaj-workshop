@@ -83,7 +83,7 @@ aws dynamodb scan --table-name askfirst-$STAGE \
 
 `path` cho biết kết quả được tạo ra theo đường nào: `fast` (luật là đủ), `cache`, `llm` (judge Qwen3 32B), `escalated` (gọi thêm model dự phòng `gpt-oss-120b`) hoặc `rules_only` (không có LLM, xem 5.6.4).
 
-<!-- TODO screenshot: CloudWatch Logs có dòng cùng trace_id ở log group worker và ai -->
+![Cùng một trace_id ở log group worker và ai: analyze, render, rồi worker ghi kết quả path=llm](/images/5-Workshop/5.6/trace-id-logs.jpg)
 <!-- TODO screenshot: DynamoDB Explore items với một item CHECK# (che user ID) -->
 
 #### 5.6.4 Kịch bản lỗi
@@ -169,4 +169,4 @@ AWS_PROFILE=<your-bedrock-profile> uv run --with "botocore[crt]" python ../eval/
 
 Khoảng 3,5 s trong thời gian đầu-cuối của ảnh là debounce 3 giây của SQS (`DelaySeconds = 3` trên `AnalyzeJob`) cộng thời gian poll. Mốc cho ảnh được nới lên khoảng 30 giây vì bot trả lời bất đồng bộ (`docs/decisions/ADR-003-ocr-rapidocr.md`). Bài học về cold start ở mục 5.10.
 
-<!-- TODO screenshot: kết quả câu truy vấn cold start trong CloudWatch Logs Insights (mục 5.7) -->
+![Kết quả truy vấn cold start (2 tuần): 21 lần, p50 6,4 s, p95 8,6 s, max 8,9 s](/images/5-Workshop/5.7/logs-insights-cold-start.jpg)

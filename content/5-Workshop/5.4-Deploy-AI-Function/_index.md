@@ -134,7 +134,7 @@ export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-
 ```
 
 <!-- TODO screenshot: GitHub Actions run "AI image" (workflow_dispatch) all steps green, with the summary showing the image size and the Deploy line (account ID blurred) -->
-<!-- TODO screenshot: ECR console, repository askfirst-ai with the pushed image tag -->
+![ECR console: pushed images tagged by commit. The team's current dev environment uses the repository askfirst-dev-ai, not the askfirst-ai name the askfirst-github-oidc stack creates](/images/5-Workshop/5.4/ecr-images.jpg)
 
 <!-- TODO(not verified): building locally with `docker build -f ai/Dockerfile -t askfirst-ai .` (add `--platform linux/amd64` on Apple Silicon) and pushing with docker login/tag/push like the workflow's Push step. The Dockerfile says to build on GitHub Actions; the team has not used the local path. -->
 
@@ -158,7 +158,9 @@ CloudFormation now creates `askfirst-dev-ai` with alias `live`. The `worker` alr
 If the real pipeline fails and you need the bot running end to end first, deploy again with `AiPipelineImpl=stub` added. The stub answers from fixed keyword rules, with no media download and no network calls (no OCR, no Bedrock). It is meant for the `dev` bot only. Remove it (or set `AiPipelineImpl=real`) when the real pipeline works.
 {{% /notice %}}
 
-<!-- TODO screenshot: Lambda console, function askfirst-dev-ai, "Image" tab with the ECR image URI and the Aliases tab showing live -->
+![Function askfirst-dev-ai, Code tab: image URI pointing at ECR, x86_64 architecture](/images/5-Workshop/5.4/lambda-ai-image.jpg)
+
+![Alias live pointing at the published version](/images/5-Workshop/5.4/lambda-ai-alias.jpg)
 
 #### Step 6: Test the AI function
 
@@ -181,7 +183,7 @@ Read the logs if it fails:
 aws logs tail /aws/lambda/askfirst-dev-ai --region ap-southeast-1 --since 10m
 ```
 
-<!-- TODO screenshot: CloudWatch Logs of askfirst-dev-ai showing the first invocation (init duration and artifact download) -->
+![Logs Insights on /aws/lambda/askfirst-dev-ai: REPORT lines with @initDuration around 8.4–8.6 s and max memory around 0.9 GB](/images/5-Workshop/5.4/ai-init-duration.jpg)
 
 #### Optional: Bedrock in another AWS account
 

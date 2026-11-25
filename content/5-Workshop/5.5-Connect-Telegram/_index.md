@@ -43,7 +43,7 @@ aws ssm get-parameters-by-path --region "$AWS_REGION" --path "/askfirst/$STAGE" 
   --query "Parameters[*].[Name,Type]" --output table
 ```
 
-<!-- TODO screenshot: Systems Manager → Parameter Store filtered by /askfirst/dev, showing bot_token and webhook_secret as SecureString (values hidden) -->
+![Parameter Store filtered by /askfirst/dev: bot_token and webhook_secret are SecureString](/images/5-Workshop/5.5/ssm-parameters.jpg)
 
 {{% notice warning %}}
 Never print these values, put them in screenshots or commit them. `--with-decryption` shows the plaintext, so use it only inside a command substitution as below. If a token or secret leaks, revoke the token with BotFather (`/revoke`), store the new values and repeat steps 1 and 3.

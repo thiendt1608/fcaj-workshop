@@ -83,7 +83,7 @@ aws dynamodb scan --table-name askfirst-$STAGE \
 
 `path` tells you how the verdict was produced: `fast` (rules were enough), `cache`, `llm` (Qwen3 32B judge), `escalated` (backup model `gpt-oss-120b` also called) or `rules_only` (no LLM, see 5.6.4).
 
-<!-- TODO screenshot: CloudWatch Logs showing matching trace_id lines in the worker and ai log groups -->
+![One trace_id across the worker and ai log groups: analyze, render, then the worker logs the result with path=llm](/images/5-Workshop/5.6/trace-id-logs.jpg)
 <!-- TODO screenshot: DynamoDB Explore items view with a CHECK# item (blur the user ID) -->
 
 #### 5.6.4 Failure scenarios
@@ -169,4 +169,4 @@ AWS_PROFILE=<your-bedrock-profile> uv run --with "botocore[crt]" python ../eval/
 
 About 3.5 s of the image end-to-end time is the 3-second SQS debounce (`DelaySeconds = 3` on `AnalyzeJob`) plus polling. The image target was relaxed to about 30 seconds because replies are asynchronous (`docs/decisions/ADR-003-ocr-rapidocr.md`). See 5.10 for the cold-start lessons.
 
-<!-- TODO screenshot: CloudWatch Logs Insights result of the cold-start query in 5.7 -->
+![Cold-start query result (2 weeks): 21 cold starts, p50 6.4 s, p95 8.6 s, max 8.9 s](/images/5-Workshop/5.7/logs-insights-cold-start.jpg)
