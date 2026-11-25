@@ -27,7 +27,7 @@ Trang này đưa ra chi phí hằng tháng để chạy Ask First ở mức tả
 
 - **Dự toán AWS Pricing Calculator:** <https://calculator.aws/#/estimate?id=073f413f6ac370de48bf3bff0ba10a7b870ae807> (tạo 24/11/2026, dịch vụ ở `ap-southeast-1`; tổng Calculator 4,04 USD/tháng, chưa có Bedrock).
 - Bedrock tính tay vì Calculator không cho chọn nhà cung cấp Qwen ở Region Sydney.
-- Cột "Có always-free" giả định tài khoản vẫn hưởng mức always-free của Lambda, SQS, CloudWatch và DynamoDB. <!-- TODO(not verified): tài khoản team còn hưởng các mức always-free này hay không (Billing > Free Tier). -->
+- Cột "Có always-free" giả định tài khoản vẫn hưởng mức always-free của Lambda, SQS, CloudWatch và DynamoDB. Đã kiểm ngày 25/11/2026: tài khoản team vẫn hưởng (tháng 11 Lambda dùng ≈ 8.200/400.000 GB-giây, SQS ≈ 178.000/1 triệu request).
 - Khoản lớn nhất là Bedrock (≈ 2,1 USD) và CloudWatch (2,35 USD khi không có Free Tier).
 
 ![Dự toán trên AWS Pricing Calculator (24/11/2026): 4,04 USD/tháng, 48,48 USD/12 tháng cho 8 dòng Lambda, SQS, DynamoDB, S3, ECR, CloudWatch. Chưa gồm Bedrock](/images/5-Workshop/5.8/pricing-calculator.jpg)
@@ -60,7 +60,22 @@ Trang này đưa ra chi phí hằng tháng để chạy Ask First ở mức tả
 | ECR | 2 GB | image `ai` ≤ 2 GB |
 | CloudWatch | 0,5 GB log, 5 metric, 5 alarm, 1 dashboard | dự trù cho giám sát đã lên kế hoạch; hiện chỉ có 1 alarm |
 
-Thời gian chạy Lambda trong bảng lấy từ số đo trên máy dev và giả định, làm trước khi đo function `ai` trên Lambda. Số đo trên Lambda ở 5.6.5 (văn bản p95 3,5 s, ảnh trong `ai` p95 12,2 s) nằm cùng khoảng. Chi phí thật cần đọc từ Cost Explorer sau một tuần chạy thật. <!-- TODO(not verified): chi phí thật hằng tháng từ Cost Explorer. -->
+Thời gian chạy Lambda trong bảng lấy từ số đo trên máy dev và giả định, làm trước khi đo function `ai` trên Lambda. Số đo trên Lambda ở 5.6.5 (văn bản p95 3,5 s, ảnh trong `ai` p95 12,2 s) nằm cùng khoảng. CloudWatch `Duration` 14 ngày đến 25/11 (traffic test): `ai` TB 2,7 s và `worker` TB 4,6 s, đều dưới mức 5 s đã nhập; `webhook` TB 1,0 s, gấp đôi mức giả định 0,5 s, nên dòng `webhook` lên khoảng 0,06 USD.
+
+**Chi phí thật (Cost Explorer và AWS Budgets, 01–25/11/2026).** Tải trong kỳ chủ yếu là các lần chạy eval và test của nhóm, không phải 3.000 lượt thật, nên con số dùng để đối chiếu đơn giá chứ không thay cho dự toán.
+
+| Tài khoản | Khoản | USD |
+|---|---|---|
+| Tài khoản chạy Bedrock | Qwen3 32B (11,8 triệu token vào, 0,94 triệu ra) | 2,40 |
+| | gpt-oss-120b (2,5 triệu token vào, 0,44 triệu ra) | 0,66 |
+| | Guardrails, dòng `ContentPolicyUnitsConsumed` (3.266 text unit × 0,15 USD / 1.000) | 0,49 |
+| | Gemma 3 12B (benchmark G1) | 0,02 |
+| | Thuế (≈ 10%) | 0,36 |
+| | **Tổng** | **3,93** |
+| Tài khoản dev (Lambda, SQS, DynamoDB, S3, ECR, CloudWatch) | theo AWS Budgets, dự báo cả tháng ≈ 0,10 | 0,09 |
+
+- AWS tính Guardrail theo dòng `ContentPolicyUnitsConsumed` (0,15 USD / 1.000), đúng mức dự toán đang dùng.
+- Hoá đơn có thêm ≈ 10% thuế; bảng 5.8.1 và Pricing Calculator đều chưa tính thuế.
 
 #### 5.8.3 Các biện pháp tối ưu chi phí đã dùng
 
@@ -76,12 +91,12 @@ Thời gian chạy Lambda trong bảng lấy từ số đo trên máy dev và gi
 | Kill switch `llm_enabled` | `CONFIG#global / FLAGS` trong DynamoDB | tắt LLM không cần deploy khi bot bị spam hoặc sắp vượt ngân sách |
 | Giới hạn song song của worker | `ScalingConfig.MaximumConcurrency: 5` | tối đa 5 job (tức 5 lần gọi LLM) chạy cùng lúc |
 | Không dùng provisioned concurrency | `infra/template.yaml` | không trả tiền lúc rảnh; cold start xử lý bằng warm-up ở pha INIT (xem 5.10) |
-| AWS Budgets ở 10, 25, 50 USD | mức tài khoản (BE-01) | cảnh báo sớm về chi tiêu |
+| AWS Budgets ở 10, 25, 50 USD | budget `Monthly` 50 USD của tài khoản (BE-01; mức 10 và 25 USD thêm ngày 25/11/2026) | cảnh báo sớm về chi tiêu |
 
 **Chưa làm (đề xuất trong `docs/results/cost-estimate.md`):**
 
 - Đặt thời gian giữ log CloudWatch 7 ngày cho 3 function. Hiện log giữ vĩnh viễn.
-- Xác nhận AWS tính Guardrail theo dòng giá nào (`ContentPolicyUnitsConsumed` 0,15 USD/1.000 hay `PromptAttackCheckUnitsConsumed` 0,08 USD/1.000). Dự toán lấy mức cao hơn. <!-- TODO(not verified): dòng giá Guardrail, kiểm trong Cost Explorer. -->
+- Gắn lifecycle policy cho repo ECR `askfirst-dev-ai` mà stack dev đang dùng. Policy giữ 5 image trong `infra/github-oidc.yaml` chỉ áp cho repo `askfirst-ai`; repo dev chưa có policy (kiểm 25/11/2026).
 
 {{% notice warning %}}
 Rủi ro chi phí lớn nhất không nằm ở mức chạy ổn định mà ở stack bị bỏ quên sau workshop, hoặc bot bị gửi tin ồ ạt. Dùng kill switch khi lưu lượng tăng đột biến, và chạy phần dọn dẹp ở 5.9 khi làm xong.

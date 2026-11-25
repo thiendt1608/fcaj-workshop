@@ -211,6 +211,8 @@ aws iam put-role-policy --role-name <AI_LAMBDA_ROLE> --policy-name assume-bedroc
 
 Then set `BEDROCK_ROLE_ARN=arn:aws:iam::<BEDROCK_ACCOUNT>:role/askfirst-bedrock-from-team` on the `ai` function.
 
-<!-- TODO(not verified): how BEDROCK_ROLE_ARN was set on the function. The template does not define this variable, so the next `sam deploy` overwrites it, and alias `live` points to a published version, so a change to $LATEST also needs a new version and an alias update. The inline policy on the SAM-generated role may also be lost if CloudFormation replaces the role. -->
+{{% notice warning %}}
+In the team's dev environment, `BEDROCK_ROLE_ARN` is set on both `$LATEST` and the `live` alias of the `ai` function (checked 25/11/2026), but neither the template nor the CI workflow defines it, so it was set outside the repo. The next `sam deploy` may wipe it. The `live` alias points to a published version, so after changing `$LATEST` you must publish a new version and update the alias. An inline policy attached to the SAM-generated role can also be lost if CloudFormation replaces the role. Re-check the variable and the policy after every deploy.
+{{% /notice %}}
 
 Next: [5.5 Connect Telegram](../5.5-connect-telegram/).

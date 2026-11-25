@@ -27,7 +27,7 @@ This page gives the monthly cost of running Ask First for the target load, how t
 
 - **AWS Pricing Calculator estimate:** <https://calculator.aws/#/estimate?id=073f413f6ac370de48bf3bff0ba10a7b870ae807> (created 24/11/2026, services in `ap-southeast-1`; Calculator total 4.04 USD/month without Bedrock).
 - Bedrock is priced by hand because the Calculator does not let you select the Qwen provider in the Sydney Region.
-- The "with always-free" column assumes the account still gets the always-free Lambda, SQS, CloudWatch and DynamoDB tiers. <!-- TODO(not verified): whether the team account still has these always-free tiers (Billing > Free Tier). -->
+- The "with always-free" column assumes the account still gets the always-free Lambda, SQS, CloudWatch and DynamoDB tiers. Checked on 25/11/2026: the team account still does (November so far: Lambda ≈ 8,200/400,000 GB-seconds, SQS ≈ 178,000/1M requests).
 - The largest items are Bedrock (≈ 2.1 USD) and CloudWatch (2.35 USD without Free Tier).
 
 ![AWS Pricing Calculator estimate (24/11/2026): 4.04 USD/month, 48.48 USD/12 months across 8 lines for Lambda, SQS, DynamoDB, S3, ECR, CloudWatch. Bedrock not included](/images/5-Workshop/5.8/pricing-calculator.jpg)
@@ -60,7 +60,22 @@ Unit price (AWS Price List API, `ap-southeast-2`, 17/11/2026): Qwen3 32B input 0
 | ECR | 2 GB | `ai` image ≤ 2 GB |
 | CloudWatch | 0.5 GB logs, 5 metrics, 5 alarms, 1 dashboard | headroom for planned monitoring; only 1 alarm exists today |
 
-Lambda durations in this table come from dev-machine runs and assumptions, made before the `ai` function was measured on Lambda. The Lambda measurements in 5.6.5 (text p95 3.5 s, image inside `ai` p95 12.2 s) are in the same range. Actual spend should be read from Cost Explorer after a week of real use. <!-- TODO(not verified): real monthly cost from Cost Explorer. -->
+Lambda durations in this table come from dev-machine runs and assumptions, made before the `ai` function was measured on Lambda. The Lambda measurements in 5.6.5 (text p95 3.5 s, image inside `ai` p95 12.2 s) are in the same range. CloudWatch `Duration` over the 14 days to 25/11 (test traffic): `ai` avg 2.7 s and `worker` avg 4.6 s, both under the 5 s entered; `webhook` avg 1.0 s, twice the assumed 0.5 s, so the `webhook` line rises to about 0.06 USD.
+
+**Actual spend (Cost Explorer and AWS Budgets, 01–25/11/2026).** Traffic in this period was mostly the team's eval and test runs, not 3,000 real checks, so these numbers confirm unit prices rather than replace the estimate.
+
+| Account | Item | USD |
+|---|---|---|
+| Bedrock account | Qwen3 32B (11.8M input tokens, 0.94M output) | 2.40 |
+| | gpt-oss-120b (2.5M input tokens, 0.44M output) | 0.66 |
+| | Guardrails, `ContentPolicyUnitsConsumed` line (3,266 text units × 0.15 USD / 1,000) | 0.49 |
+| | Gemma 3 12B (G1 benchmark) | 0.02 |
+| | Tax (≈ 10%) | 0.36 |
+| | **Total** | **3.93** |
+| Dev account (Lambda, SQS, DynamoDB, S3, ECR, CloudWatch) | from AWS Budgets, month forecast ≈ 0.10 | 0.09 |
+
+- AWS bills Guardrails on the `ContentPolicyUnitsConsumed` line (0.15 USD / 1,000), the same rate the estimate uses.
+- The bill adds ≈ 10% tax; neither the 5.8.1 table nor the Pricing Calculator includes tax.
 
 #### 5.8.3 Cost optimizations used in the design
 
@@ -76,12 +91,12 @@ Lambda durations in this table come from dev-machine runs and assumptions, made 
 | Kill switch `llm_enabled` | `CONFIG#global / FLAGS` in DynamoDB | switches the LLM off without a deploy if the bot is spammed or the budget is at risk |
 | Worker concurrency cap | `ScalingConfig.MaximumConcurrency: 5` | at most 5 jobs (and so 5 LLM calls) run in parallel |
 | No provisioned concurrency | `infra/template.yaml` | no idle charge; cold starts handled by INIT warm-up instead (see 5.10) |
-| AWS Budgets at 10, 25, 50 USD | account level (BE-01) | early warning on spend |
+| AWS Budgets at 10, 25, 50 USD | the account's 50 USD `Monthly` budget (BE-01; the 10 and 25 USD levels added on 25/11/2026) | early warning on spend |
 
 **Not done yet (recommended in `docs/results/cost-estimate.md`):**
 
 - Set CloudWatch log retention to 7 days for the three functions. Today logs are kept forever.
-- Confirm which Guardrail price line AWS bills (`ContentPolicyUnitsConsumed` at 0.15 USD/1,000 or `PromptAttackCheckUnitsConsumed` at 0.08 USD/1,000). The estimate uses the higher one. <!-- TODO(not verified): Guardrail billing line, check in Cost Explorer. -->
+- Add a lifecycle policy to the `askfirst-dev-ai` ECR repository the dev stack uses. The keep-5-images policy in `infra/github-oidc.yaml` only applies to the `askfirst-ai` repository; the dev repository has none (checked 25/11/2026).
 
 {{% notice warning %}}
 The biggest cost risk is not the steady state but a stack left running after the workshop, or someone flooding the bot. Use the kill switch if traffic spikes, and run the clean-up in 5.9 when you are done.

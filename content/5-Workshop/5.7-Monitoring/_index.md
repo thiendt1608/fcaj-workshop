@@ -117,7 +117,7 @@ aws sns subscribe --topic-arn "$TOPIC_ARN" --protocol email --notification-endpo
 sam deploy --parameter-overrides Stage=dev AlarmTopicArn="$TOPIC_ARN" ...   # keep your other overrides
 ```
 
-<!-- TODO(not verified): whether the team's dev stack was deployed with an AlarmTopicArn; no SNS topic is defined in the repo. -->
+The team's dev stack is currently deployed with an empty `AlarmTopicArn`, so the DLQ alarm has no actions (checked 25/11/2026). Follow the steps above to get email alerts.
 <!-- TODO screenshot: SNS subscription confirmed + alarm email received -->
 
 #### 5.7.6 Gaps you should know about

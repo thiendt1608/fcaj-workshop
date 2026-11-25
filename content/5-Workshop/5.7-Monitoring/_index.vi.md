@@ -117,7 +117,7 @@ aws sns subscribe --topic-arn "$TOPIC_ARN" --protocol email --notification-endpo
 sam deploy --parameter-overrides Stage=dev AlarmTopicArn="$TOPIC_ARN" ...   # giữ các override khác
 ```
 
-<!-- TODO(not verified): stack dev của team có deploy kèm AlarmTopicArn hay không; repo không định nghĩa SNS topic nào. -->
+Stack dev của nhóm hiện deploy với `AlarmTopicArn` rỗng, nên alarm DLQ không có action nào (kiểm 25/11/2026). Muốn nhận email thì làm các bước trên.
 <!-- TODO screenshot: subscription SNS đã xác nhận + email alarm nhận được -->
 
 #### 5.7.6 Các điểm còn thiếu

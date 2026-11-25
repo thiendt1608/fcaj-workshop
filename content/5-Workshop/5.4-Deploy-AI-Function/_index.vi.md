@@ -211,6 +211,8 @@ aws iam put-role-policy --role-name <AI_LAMBDA_ROLE> --policy-name assume-bedroc
 
 Sau đó đặt `BEDROCK_ROLE_ARN=arn:aws:iam::<BEDROCK_ACCOUNT>:role/askfirst-bedrock-from-team` cho function `ai`.
 
-<!-- TODO(not verified): team đặt BEDROCK_ROLE_ARN cho function bằng cách nào. Template không khai báo biến này nên lần `sam deploy` sau sẽ ghi đè mất, và alias `live` trỏ vào một version đã publish nên sửa $LATEST còn cần publish version mới và cập nhật alias. Inline policy gắn vào role do SAM sinh ra cũng có thể mất nếu CloudFormation thay role. -->
+{{% notice warning %}}
+Ở môi trường dev của nhóm, `BEDROCK_ROLE_ARN` có trên cả `$LATEST` và alias `live` của function `ai` (kiểm 25/11/2026), nhưng template và workflow CI đều không khai báo biến này, tức là nó được đặt ngoài repo. Lần `sam deploy` sau có thể ghi đè mất biến. Alias `live` trỏ vào một version đã publish, nên sửa `$LATEST` xong phải publish version mới rồi cập nhật alias. Inline policy gắn vào role do SAM sinh ra cũng có thể mất nếu CloudFormation thay role. Kiểm lại biến và policy sau mỗi lần deploy.
+{{% /notice %}}
 
 Tiếp theo: [5.5 Kết nối Telegram](../5.5-connect-telegram/).
