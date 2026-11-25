@@ -24,7 +24,7 @@ chapter: false
 
 &emsp; **Internship company:** Amazon Web Services Vietnam Co., Ltd.
 
-&emsp; **Position:** First Cloud AI Journey (FCAJ)
+&emsp; **Position:** Intern, First Cloud AI Journey (FCAJ) program
 
 &emsp; **Internship period:** From 14/09/2026 to 14/12/2026
 

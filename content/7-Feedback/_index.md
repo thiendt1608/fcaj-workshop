@@ -13,7 +13,7 @@ First Cloud AI Journey let me build a real project end to end on AWS instead of 
 **4.5/5.** I learned the most from getting an AI model running on AWS and measuring it with real numbers. Half a point off because some requirements changed close to the deadline.
 
 ### What could be improved
-* The rules were updated on 21–24/11 (the Step-by-step Lab Guide became mandatory) while the deadline is 29/11, leaving teams little time to adjust. Fixing requirements earlier, or announcing changes with a transition period, would help.
+* The rules were updated on 21–24/11 (the Step-by-step Lab Guide became mandatory) while the deadline is 30/11, leaving teams little time to adjust. Fixing requirements earlier, or announcing changes with a transition period, would help.
 * Getting Bedrock model access and a team AWS account took time early on; a guide or ready accounts from week one would help AI teams avoid delays.
 * A sample workshop for a multi-service project (not only a single-service lab) would show interns how much detail is expected.
 
