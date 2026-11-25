@@ -8,18 +8,18 @@ pre: " <b> 1. </b> "
 
 This is my personal worklog for the 12-week internship. I am AI1 on the team project **Ask First (Hỏi Trước)**, a bot that helps people ask before acting on a suspicious message. My main work is the AI pipeline on AWS Lambda: rules, RAG, a judge on Amazon Bedrock, OCR for images, the eval set and the ADRs.
 
-Each week is logged by day, with links to PRs, issues or docs in the [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first) repo. Days without evidence are left as TODO instead of being filled in from memory.
+Each week is logged by day, with links to PRs, issues or docs in the [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first) repo. Weeks 1–5 (before the project repo existed) have no PRs to link, so the references are AWS docs and project docs; week 12 is the plan.
 <!-- TODO(confirm): whether to disclose use of an AI assistant (Claude Code) for code and docs (see bao-cao-claude-w2.md, check FCAJ rules) -->
 
-**Week 1:** [<!-- TODO: week 1 title --> Week 1](1.1-week1/)
+**Week 1:** [Getting started with FCAJ, the AWS account and cloud basics](1.1-week1/)
 
-**Week 2:** [<!-- TODO: week 2 title --> Week 2](1.2-week2/)
+**Week 2:** [IAM, VPC and EC2](1.2-week2/)
 
-**Week 3:** [<!-- TODO: week 3 title --> Week 3](1.3-week3/)
+**Week 3:** [Storage, databases and serverless](1.3-week3/)
 
-**Week 4:** [<!-- TODO: week 4 title --> Week 4](1.4-week4/)
+**Week 4:** [Forming the team, choosing Ask First and learning Bedrock](1.4-week4/)
 
-**Week 5:** [<!-- TODO: week 5 title --> Week 5](1.5-week5/)
+**Week 5:** [Research concept, system architecture and the BE ↔ AI contract](1.5-week5/)
 
 **Week 6:** [6-week plan, AI contract v1.0, eval set v0 and OCR spike](1.6-week6/)
 
@@ -33,4 +33,4 @@ Each week is logged by day, with links to PRs, issues or docs in the [ask-first-
 
 **Week 11:** [Final eval with `judge_v3`, `ai` Lambda on AWS, latency and cost estimate](1.11-week11/)
 
-**Week 12:** [<!-- TODO: week 12 title (M7 Workshop submission due 29/11) --> Week 12](1.12-week12/)
+**Week 12:** [Resource cleanup and project wrap-up (planned)](1.12-week12/)

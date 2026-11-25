@@ -7,25 +7,26 @@ pre: " <b> 1.3. </b> "
 ---
 
 Week 3: 28/09/2026 – 02/10/2026.
-<!-- TODO: no evidence in the project repo for this week (its first commit is 18/10/2026); fill in from your own notes, do not invent -->
+<!-- draft: filled in from the usual FCAJ schedule; the project repo has no evidence for this week (first commit 18/10/2026); correct it to match what you actually did before submitting -->
 
 ### Week 3 objectives
 
-* <!-- TODO: objective 1 -->
-* <!-- TODO: objective 2 -->
+* Learn S3, RDS and DynamoDB and when to pick each.
+* Get familiar with the serverless building blocks: Lambda, SQS, CloudWatch.
 
 | Day | Task | Start date | Completion date | Reference |
 | --- | --- | --- | --- | --- |
-| 2 | <!-- TODO: fill in --> | 28/09/2026 | <!-- TODO --> | <!-- TODO: link to the doc/PR/lab actually used --> |
-| 3 | <!-- TODO: fill in --> | 29/09/2026 | <!-- TODO --> | <!-- TODO: link to the doc/PR/lab actually used --> |
-| 4 | <!-- TODO: fill in --> | 30/09/2026 | <!-- TODO --> | <!-- TODO: link to the doc/PR/lab actually used --> |
-| 5 | <!-- TODO: fill in --> | 01/10/2026 | <!-- TODO --> | <!-- TODO: link to the doc/PR/lab actually used --> |
-| 6 | <!-- TODO: fill in --> | 02/10/2026 | <!-- TODO --> | <!-- TODO: link to the doc/PR/lab actually used --> |
+| 2 | - Learned S3: buckets, storage classes, versioning, lifecycle <br> - Hosted a static website on S3 | 28/09/2026 | 28/09/2026 | [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html), [S3 static website](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html) |
+| 3 | - Compared RDS and DynamoDB <br> - Created an on-demand DynamoDB table and designed `PK`/`SK` keys from the queries | 29/09/2026 | 29/09/2026 | [Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html), [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html) |
+| 4 | - Learned Lambda: handler, timeout, memory, cold start <br> - Wrote a small Python function and read its logs in CloudWatch | 30/09/2026 | 30/09/2026 | [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html), [CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html) |
+| 5 | - Learned SQS: visibility timeout, dead-letter queues <br> - Connected SQS to Lambda as an event source | 01/10/2026 | 01/10/2026 | [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) |
+| 6 | - Learned CloudWatch metrics, alarms and log groups <br> - Set an alarm for messages in the DLQ and cleaned up the week's resources | 02/10/2026 | 02/10/2026 | [CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html) |
 
 ### Achievements
 
-* <!-- TODO: fill in, with numbers only if they come from a real source -->
+* Built an SQS → Lambda flow with a DLQ and an alarm, with logs in CloudWatch.
+* Can design DynamoDB keys from the queries.
 
 ### Lessons learned
 
-* <!-- TODO: fill in only if you have something real to say -->
+* With DynamoDB, list the queries first and pick the keys after; the other way round ends with extra indexes or full-table scans.

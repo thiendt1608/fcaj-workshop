@@ -8,18 +8,18 @@ pre: " <b> 1. </b> "
 
 Đây là nhật ký công việc cá nhân của tôi trong 12 tuần thực tập. Tôi giữ vai trò AI1 trong dự án nhóm **Hỏi Trước (Ask First)**, một bot giúp người dùng hỏi trước khi làm theo tin nhắn đáng ngờ. Phần việc chính của tôi là pipeline AI trên AWS Lambda: luật, RAG, judge dùng Amazon Bedrock, OCR cho ảnh, bộ eval và các ADR.
 
-Mỗi tuần ghi theo ngày, kèm link PR, issue hoặc tài liệu trong repo [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first). Ngày nào chưa có bằng chứng thì để trống (TODO) thay vì tự điền.
+Mỗi tuần ghi theo ngày, kèm link PR, issue hoặc tài liệu trong repo [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first). Tuần 1–5 (trước khi có repo dự án) chưa có PR để link, nên nguồn là tài liệu AWS và tài liệu dự án; tuần 12 là kế hoạch.
 <!-- TODO(confirm): có cần ghi rõ việc dùng trợ lý AI (Claude Code) khi viết code và tài liệu không (xem bao-cao-claude-w2.md, kiểm quy định của FCAJ) -->
 
-**Tuần 1:** [<!-- TODO: tiêu đề tuần 1 --> Tuần 1](1.1-week1/)
+**Tuần 1:** [Làm quen FCAJ, tài khoản AWS và tổng quan cloud](1.1-week1/)
 
-**Tuần 2:** [<!-- TODO: tiêu đề tuần 2 --> Tuần 2](1.2-week2/)
+**Tuần 2:** [IAM, VPC và EC2](1.2-week2/)
 
-**Tuần 3:** [<!-- TODO: tiêu đề tuần 3 --> Tuần 3](1.3-week3/)
+**Tuần 3:** [Lưu trữ, cơ sở dữ liệu và serverless](1.3-week3/)
 
-**Tuần 4:** [<!-- TODO: tiêu đề tuần 4 --> Tuần 4](1.4-week4/)
+**Tuần 4:** [Lập nhóm, chọn đề tài Hỏi Trước và tìm hiểu Bedrock](1.4-week4/)
 
-**Tuần 5:** [<!-- TODO: tiêu đề tuần 5 --> Tuần 5](1.5-week5/)
+**Tuần 5:** [Research concept, kiến trúc hệ thống và hợp đồng BE ↔ AI](1.5-week5/)
 
 **Tuần 6:** [Chốt plan 6 tuần, contract AI v1.0, bộ eval v0 và spike OCR](1.6-week6/)
 
@@ -33,4 +33,4 @@ Mỗi tuần ghi theo ngày, kèm link PR, issue hoặc tài liệu trong repo [
 
 **Tuần 11:** [Eval cuối với `judge_v3`, đưa Lambda `ai` lên AWS, đo độ trễ và dự toán chi phí](1.11-week11/)
 
-**Tuần 12:** [<!-- TODO: tiêu đề tuần 12 (nộp Workshop M7 hạn 29/11) --> Tuần 12](1.12-week12/)
+**Tuần 12:** [Dọn tài nguyên và tổng kết dự án (kế hoạch)](1.12-week12/)

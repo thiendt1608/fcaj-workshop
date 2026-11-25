@@ -128,9 +128,9 @@ Six one-week sprints, three parallel tracks (backend, AI, shared) joined by a JS
 
 | Week | Milestone / gate | Content | Status (from repo docs) |
 |---|---|---|---|
-| W1 (19–25/10) | **G0** Contract | BE↔AI JSON Schema, fixtures, contract tests in CI | Done <!-- TODO(not verified): exact merge date of G0 --> |
+| W1 (19–25/10) | **G0** Contract | BE↔AI JSON Schema, fixtures, contract tests in CI | Done: contract merged 23/10 ([#89](https://github.com/ask-first-fcaj/ask-first/pull/89)), BE approved and G0 closed 28/10 ([#2](https://github.com/ask-first-fcaj/ask-first/issues/2)); Java-side contract test added to CI 11/11 ([#104](https://github.com/ask-first-fcaj/ask-first/pull/104)) |
 | W2 (26/10–01/11) | **G1** LLM choice · **G2** OCR choice | Benchmark judge models; compare OCR stacks on 50 real screenshots | G2 passed 30/10 (RapidOCR, URL 94%). G1 closed 11/11, later than planned (Qwen3 32B, ADR-002) |
-| W3 (02–08/11) | **M1** Text end-to-end | Forwarded text → real verdict (rules + Qwen3) | <!-- TODO(not verified): M1 completion date --> |
+| W3 (02–08/11) | **M1** Text end-to-end | Forwarded text → real verdict (rules + Qwen3) | Missed the date: text pipeline code done 03/11, first real Bedrock call 11/11 ([#132](https://github.com/ask-first-fcaj/ask-first/pull/132)), `ai` Lambda wired to AWS 23/11 ([#173](https://github.com/ask-first-fcaj/ask-first/pull/173)), INT-01 closed 25/11 ([#56](https://github.com/ask-first-fcaj/ask-first/issues/56)) |
 | W4 (09–15/11) | **M2** Images + family | Screenshot → local OCR → verdict; family alert | Image path measured on Lambda 25/11 (see section 7) |
 | W5 (16–22/11) | **M3** RAG · **M4** MVP freeze | Citations from official warnings; eval gate | M4 eval report 17/11; RAG p95 45 ms on Lambda |
 | W6 (23–29/11) | **M5** internal test · **M6** presentation · **M7** workshop submission | Team and family testing, cost estimate, final eval, clean-up guide | Final eval 24/11, cost estimate 24/11 |
@@ -160,10 +160,12 @@ Load assumption: **3,000 checks/month**, text and images, no voice. Non-Bedrock 
 - Per check, LLM tokens only: ≈ 0.000792 USD (≈ 20 VND), well under the 0.005 USD target.
 - The 2,250 LLM calls assume 25% of checks are answered by the rules fast path or cache. This ratio is **not verified**: the eval set is almost all scams and hard cases. If every check calls the LLM, Bedrock is ≈ 2.7 USD/month.
 
-<!-- TODO(not verified): whether the team AWS account still qualifies for the always-free tiers (check Billing > Free Tier) -->
-<!-- TODO(not verified): Lambda durations for worker/webhook are assumptions; ai duration is from dev-machine measurements rounded up -->
-<!-- TODO(not verified): which Guardrails price line AWS actually bills (0.15 vs 0.08 USD per 1,000 units); 0.15 used to be safe -->
-<!-- TODO(not verified): actual spend from Cost Explorer after the internal test week -->
+**Checked against real numbers** (25/11/2026, team dev account, free APIs only)
+
+- **Free Tier:** the account still gets the always-free tiers. November up to 25/11: Lambda ≈ 8,200/400,000 GB-seconds and 273/1M requests, SQS ≈ 178,000/1M requests, CloudWatch alarms 0.37/10. The "With always-free" column holds for this account.
+- **Lambda durations** (CloudWatch `Duration`, 14 days, team test traffic): `ai` 248 invocations, avg 2.7 s, p95 9.7 s; `worker` 73, avg 4.6 s, p95 14.2 s; `webhook` 50, avg 1.0 s, p95 3.0 s. `ai` and `worker` fit within the 5 s entered in the Calculator. `webhook` runs twice the assumed 0.5 s, so that line becomes about 0.06 USD without Free Tier; the total barely moves. Small sample of test traffic, not real load.
+- **Actual spend:** AWS Budgets shows ≈ 0.09 USD for November up to 25/11, forecast ≈ 0.10 USD for the month. This excludes Bedrock, which runs in a different account, and test traffic is far below 3,000 checks/month.
+- **Not checked:** which Guardrails price line AWS bills (0.15 vs 0.08 USD per 1,000 units; the estimate uses 0.15 to be safe), and the per-service breakdown in Cost Explorer. <!-- TODO(not verified): Guardrails price line and Bedrock spend in the Bedrock account -->
 
 **Cost optimisation**
 
@@ -172,7 +174,7 @@ Load assumption: **3,000 checks/month**, text and images, no voice. Non-Bedrock 
 3. **Fast path and cache** – each check that skips the LLM saves ≈ 0.00094 USD (tokens + Guardrails).
 4. **Kill switch** (`CONFIG#global/FLAGS`) – turns off the LLM judge or image intake without a redeploy if a cost alarm fires or the bot is spammed; per-user rate limit caps abuse.
 5. **Free Tier** – Lambda, SQS and CloudWatch fit in the always-free tiers at this load (6.2 → 2.4 USD).
-6. **Retention and lifecycle** – S3 `donated/` already expires after 30 days. Recommended next: log retention of 7 days (the template does not set `RetentionInDays` yet) and an ECR lifecycle policy keeping the 2 latest images.
+6. **Retention and lifecycle** – S3 `donated/` already expires after 30 days. Recommended next: log retention of 7 days (the template does not set `RetentionInDays` yet) and a lifecycle policy on the `askfirst-dev-ai` ECR repository the team actually uses. `infra/github-oidc.yaml` already keeps the 5 latest images, but only for the `askfirst-ai` repository; the dev repository has no policy (checked 25/11/2026).
 
 ### 7. Risks and mitigations
 
@@ -184,7 +186,7 @@ Load assumption: **3,000 checks/month**, text and images, no voice. Non-Bedrock 
 | LLM error, throttling or quota | No answer | Backup model, then rules-only mode; the bot always replies | Implemented in the cascade |
 | Prompt injection inside forwarded text | Manipulated verdict | Bedrock Guardrails `PROMPT_ATTACK`; detected injection raises the minimum level to `UNSURE`; LLM output is rendered through templates only | Implemented |
 | Latency and cold start | Answer later than the 15 s target | Grouping on SQS; models preloaded during Lambda INIT; warm-up before the demo | Text p95 3.5 s (warm). **Image end-to-end p95 17.0 s, above 15 s**; accepted up to ~30 s by the AI lead. `ai` cold-start init p50 6.2 s |
-| Cost spike from spam | Budget overrun | Per-user rate limit, kill switch, SQS concurrency cap, DLQ alarm | <!-- TODO(not verified): AWS Budgets alerts (10/25/50 USD) shown in the diagram are actually created in the account --> |
+| Cost spike from spam | Budget overrun | Per-user rate limit, kill switch, SQS concurrency cap, DLQ alarm | The dev account has two 50 USD/month cost budgets alerting at 80–100% actual and 100% forecast (checked 25/11). The 10/25/50 USD levels drawn in the diagram do not exist |
 | Personal data and consent | Legal non-compliance | Explicit, recorded consent; withdraw and delete commands; PII masked before any external call; no original content stored; 30-day TTL. Designed against Law 91/2025/QH15 on Personal Data Protection (National Assembly) and Decree 356/2025/NĐ-CP (Government) – a design mapping, not legal advice | <!-- TODO(not verified): add official vbpl.vn / chinhphu.vn links for Law 91/2025/QH15 and Decree 356/2025/NĐ-CP --> |
 | Bedrock model availability by region | Judge unavailable | Sydney has the models in-region; fallback to Jakarta (`ap-southeast-3`) or switching model only changes `ai/config/models.yaml` | Not needed so far |
 | Team capacity (exams, 4 people) | Missed milestones | Pairing, early scope cut (voice, VLM, multi-turn, Mini App), predefined cut order if late | Scope cut applied in v3 of the plan |

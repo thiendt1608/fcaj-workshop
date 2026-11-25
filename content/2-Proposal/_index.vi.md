@@ -128,9 +128,9 @@ Sáu sprint một tuần, ba track song song (backend, AI, chung), ghép với n
 
 | Tuần | Mốc / gate | Nội dung | Tình trạng (theo tài liệu repo) |
 |---|---|---|---|
-| W1 (19–25/10) | **G0** Hợp đồng | JSON Schema BE↔AI, fixtures, contract test trong CI | Xong <!-- TODO(not verified): ngày merge chính xác của G0 --> |
+| W1 (19–25/10) | **G0** Hợp đồng | JSON Schema BE↔AI, fixtures, contract test trong CI | Xong: contract merge 23/10 ([#89](https://github.com/ask-first-fcaj/ask-first/pull/89)), BE duyệt và đóng G0 28/10 ([#2](https://github.com/ask-first-fcaj/ask-first/issues/2)); contract test phía Java vào CI 11/11 ([#104](https://github.com/ask-first-fcaj/ask-first/pull/104)) |
 | W2 (26/10–01/11) | **G1** chọn LLM · **G2** chọn OCR | Benchmark model judge; so các stack OCR trên 50 ảnh chụp thật | G2 đạt 30/10 (RapidOCR, URL 94%). G1 chốt 11/11, trễ so với kế hoạch (Qwen3 32B, ADR-002) |
-| W3 (02–08/11) | **M1** Văn bản end-to-end | Tin chuyển tiếp → kết luận thật (luật + Qwen3) | <!-- TODO(not verified): ngày xong M1 --> |
+| W3 (02–08/11) | **M1** Văn bản end-to-end | Tin chuyển tiếp → kết luận thật (luật + Qwen3) | Không đạt đúng hạn: code pipeline văn bản xong 03/11, gọi Bedrock thật 11/11 ([#132](https://github.com/ask-first-fcaj/ask-first/pull/132)), Lambda `ai` nối AWS 23/11 ([#173](https://github.com/ask-first-fcaj/ask-first/pull/173)), INT-01 đóng 25/11 ([#56](https://github.com/ask-first-fcaj/ask-first/issues/56)) |
 | W4 (09–15/11) | **M2** Ảnh + người thân | Ảnh chụp → OCR local → kết luận; cảnh báo người thân | Luồng ảnh đo trên Lambda ngày 25/11 (xem mục 7) |
 | W5 (16–22/11) | **M3** RAG · **M4** MVP freeze | Trích nguồn cảnh báo chính thức; eval gate | Báo cáo eval M4 ngày 17/11; RAG p95 45 ms trên Lambda |
 | W6 (23–29/11) | **M5** test nội bộ · **M6** thuyết trình · **M7** nộp workshop | Team và người nhà dùng thử, dự toán chi phí, eval cuối, hướng dẫn clean-up | Eval cuối 24/11, dự toán chi phí 24/11 |
@@ -160,10 +160,12 @@ Giả định tải: **3.000 lượt kiểm tra/tháng**, văn bản và ảnh, 
 - Mỗi lượt kiểm tra, chỉ tính token LLM: ≈ 0,000792 USD (≈ 20 đồng), thấp hơn nhiều so với mục tiêu 0,005 USD.
 - Con số 2.250 lượt gọi LLM giả định 25% lượt được trả lời bằng fast path của luật hoặc cache. Tỉ lệ này **chưa kiểm chứng**, vì bộ eval gần như toàn tin lừa đảo và tin khó. Nếu mọi lượt đều gọi LLM thì Bedrock ≈ 2,7 USD/tháng.
 
-<!-- TODO(not verified): tài khoản AWS của nhóm còn hưởng các mức always-free hay không (xem Billing > Free Tier) -->
-<!-- TODO(not verified): thời gian chạy của worker/webhook là giả định; thời gian của ai lấy từ số đo máy dev rồi làm tròn lên -->
-<!-- TODO(not verified): AWS tính Guardrails theo dòng giá nào (0,15 hay 0,08 USD / 1.000 unit); dùng 0,15 cho chắc -->
-<!-- TODO(not verified): chi phí thật từ Cost Explorer sau tuần test nội bộ -->
+**Đối chiếu với số thật** (kiểm ngày 25/11/2026 trên tài khoản dev của nhóm, đều là API miễn phí)
+
+- **Free Tier:** tài khoản vẫn hưởng mức always-free. Tháng 11 tính đến 25/11: Lambda ≈ 8.200/400.000 GB-giây và 273/1 triệu request, SQS ≈ 178.000/1 triệu request, CloudWatch alarm 0,37/10. Cột "Có always-free" đúng với tài khoản này.
+- **Thời gian chạy Lambda** (CloudWatch `Duration`, 14 ngày, traffic test của nhóm): `ai` 248 lượt, TB 2,7 s, p95 9,7 s; `worker` 73 lượt, TB 4,6 s, p95 14,2 s; `webhook` 50 lượt, TB 1,0 s, p95 3,0 s. `ai` và `worker` nằm trong mức 5 s đã nhập vào Calculator. `webhook` chạy lâu gấp đôi mức 0,5 s giả định, nên dòng này lên khoảng 0,06 USD khi không có Free Tier; tổng gần như không đổi. Mẫu nhỏ và là traffic test, chưa phải tải thật.
+- **Chi phí thật:** AWS Budgets ghi nhận ≈ 0,09 USD cho tháng 11 đến 25/11, dự báo cả tháng ≈ 0,10 USD. Số này chưa gồm Bedrock vì Bedrock chạy ở một tài khoản khác, và tải test thấp hơn nhiều so với 3.000 lượt/tháng.
+- **Chưa kiểm:** AWS tính Guardrails theo dòng giá nào (0,15 hay 0,08 USD / 1.000 unit; dự toán dùng 0,15 cho chắc), và chi tiết từng dịch vụ trong Cost Explorer. <!-- TODO(not verified): dòng giá Guardrails và chi phí Bedrock ở tài khoản chạy Bedrock -->
 
 **Tối ưu chi phí**
 
@@ -172,7 +174,7 @@ Giả định tải: **3.000 lượt kiểm tra/tháng**, văn bản và ảnh, 
 3. **Fast path và cache**: mỗi lượt không gọi LLM tiết kiệm ≈ 0,00094 USD (token + Guardrails).
 4. **Kill switch** (`CONFIG#global/FLAGS`): tắt judge LLM hoặc tắt nhận ảnh mà không cần deploy khi có alarm chi phí hay bị spam; rate limit theo người dùng chặn lạm dụng.
 5. **Free Tier**: Lambda, SQS và CloudWatch nằm gọn trong mức always-free ở tải này (6,2 → 2,4 USD).
-6. **Retention và lifecycle**: S3 đã tự xoá `donated/` sau 30 ngày. Đề xuất tiếp: giữ log 7 ngày (template chưa đặt `RetentionInDays`) và lifecycle policy cho ECR giữ 2 image mới nhất.
+6. **Retention và lifecycle**: S3 đã tự xoá `donated/` sau 30 ngày. Đề xuất tiếp: giữ log 7 ngày (template chưa đặt `RetentionInDays`) và gắn lifecycle policy cho repo ECR `askfirst-dev-ai` nhóm đang dùng. Template `infra/github-oidc.yaml` đã có lifecycle giữ 5 image mới nhất, nhưng chỉ cho repo `askfirst-ai`; repo dev chưa có policy (kiểm 25/11/2026).
 
 ### 7. Rủi ro và cách giảm thiểu
 
@@ -184,7 +186,7 @@ Giả định tải: **3.000 lượt kiểm tra/tháng**, văn bản và ảnh, 
 | LLM lỗi, bị throttle hoặc hết quota | Không trả lời được | Model dự phòng, rồi chế độ chỉ chạy luật; bot luôn trả lời | Đã cài trong cascade |
 | Prompt injection trong tin chuyển tiếp | Kết luận bị thao túng | Bedrock Guardrails `PROMPT_ATTACK`; phát hiện injection thì mức tối thiểu là `UNSURE`; output LLM chỉ đi qua template | Đã cài |
 | Độ trễ và cold start | Trả lời chậm hơn mục tiêu 15 giây | Gom tin trên SQS; nạp model sẵn ở pha INIT của Lambda; làm nóng trước demo | Văn bản p95 3,5 giây (warm). **Ảnh đầu-cuối p95 17,0 giây, vượt 15 giây**; AI lead chấp nhận tới khoảng 30 giây. Init cold start của `ai` p50 6,2 giây |
-| Chi phí tăng vọt do spam | Vượt ngân sách | Rate limit theo người dùng, kill switch, giới hạn concurrency SQS, alarm DLQ | <!-- TODO(not verified): cảnh báo AWS Budgets (10/25/50 USD) vẽ trong sơ đồ đã thật sự tạo trong tài khoản chưa --> |
+| Chi phí tăng vọt do spam | Vượt ngân sách | Rate limit theo người dùng, kill switch, giới hạn concurrency SQS, alarm DLQ | Tài khoản dev có 2 budget chi phí 50 USD/tháng, cảnh báo ở 80–100% chi phí thực và 100% dự báo (kiểm 25/11). Chưa có các mức 10/25/50 USD như vẽ trong sơ đồ |
 | Dữ liệu cá nhân và sự đồng ý | Không tuân thủ pháp luật | Đồng ý chủ động và được lưu lại; lệnh rút đồng ý và xoá dữ liệu; che PII trước mọi lời gọi ra ngoài; không lưu nội dung gốc; TTL 30 ngày. Thiết kế đối chiếu Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 (Quốc hội) và Nghị định 356/2025/NĐ-CP (Chính phủ); đây là ánh xạ thiết kế, không phải tư vấn pháp lý | <!-- TODO(not verified): bổ sung link chính thức trên vbpl.vn / chinhphu.vn cho Luật 91/2025/QH15 và Nghị định 356/2025/NĐ-CP --> |
 | Model Bedrock không có ở region | Judge không chạy được | Sydney có model in-region; dự phòng Jakarta (`ap-southeast-3`); đổi model chỉ cần sửa `ai/config/models.yaml` | Chưa phải dùng |
 | Nhân lực (thi cử, nhóm 4 người) | Trễ mốc | Làm theo cặp, cắt scope sớm (voice, VLM, multi-turn, Mini App), có sẵn thứ tự cắt tiếp nếu trễ | Đã cắt scope ở kế hoạch v3 |
