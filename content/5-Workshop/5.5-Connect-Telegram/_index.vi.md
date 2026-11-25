@@ -103,7 +103,9 @@ Lệnh này đặt các lệnh trong menu Telegram: `/batdau`, `/huongdan`, `/ca
 5. Gửi ảnh chụp màn hình một tin đáng ngờ để thử OCR. Ảnh đầu tiên sau khi deploy sẽ chậm hơn vì function `ai` phải tải model từ S3.
 
 ![Bot test của nhóm sau /start: tin chào kèm chính sách dữ liệu, hai nút ✅ Tôi đồng ý / ❌ Không đồng ý, bấm đồng ý thì bot xác nhận](/images/5-Workshop/5.5/telegram-consent.jpg)
-<!-- TODO screenshot: chat Telegram kiểm tra văn bản: tin "⏳" được sửa thành kết quả -->
+![Gửi tin chữ tự soạn: bot trả ngay tin ⏳ Cháu đang kiểm tra…](/images/5-Workshop/5.5/telegram-text-pending.jpg)
+
+![Vài giây sau tin ⏳ được sửa thành kết quả. Lúc chụp (25/11/2026) bot test đang ở chế độ bảo trì nên chỉ trả 🟡 BOT CHƯA CHẮC CHẮN kèm dấu hiệu cơ bản; khi LLM bật thì kết quả đầy đủ như ảnh kiểm tra ảnh bên dưới](/images/5-Workshop/5.5/telegram-text-result.jpg)
 ![Gửi ảnh chụp SMS giả ngân hàng (đã che số và link): bot trả 🔴 RẤT GIỐNG LỪA ĐẢO, lý do, việc cần làm và nút Bot báo sai](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 Cờ tính năng nằm ở item DynamoDB `CONFIG#global` / `FLAGS`. Nếu item chưa tồn tại thì giá trị mặc định là `llm_enabled=true`, `feature_image=true`, `feature_voice=false`, `feature_rag=true`, nên không cần tạo gì thêm cho lần thử này.

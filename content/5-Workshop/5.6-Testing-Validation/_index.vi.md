@@ -24,7 +24,9 @@ export AWS_REGION=ap-southeast-1
    - Vài giây sau, tin "⏳" được sửa thành kết quả gồm mức rủi ro và lời giải thích ngắn (`worker` đã gọi function `ai` rồi dựng câu trả lời).
 4. Gửi thêm một ảnh chụp màn hình tin lừa đảo tự soạn và làm lại. Tin ảnh chậm hơn vì phải chạy OCR (xem 5.6.5).
 
-<!-- TODO screenshot: khung chat Telegram có tin "⏳" và kết quả cuối cho tin văn bản -->
+![Tin ⏳ ngay sau khi gửi tin chữ](/images/5-Workshop/5.5/telegram-text-pending.jpg)
+
+![Tin ⏳ đã được sửa thành kết quả (bot test đang ở chế độ bảo trì lúc chụp, xem 5.6.4)](/images/5-Workshop/5.5/telegram-text-result.jpg)
 ![Kết quả cho tin ảnh: 🔴 RẤT GIỐNG LỪA ĐẢO – SMS giả ngân hàng báo điểm thưởng thẻ tín dụng hết hạn](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 #### 5.6.2 Gọi thẳng webhook bằng curl
@@ -105,7 +107,7 @@ aws dynamodb update-item --table-name askfirst-$STAGE \
 
 Chờ khoảng 30 giây, gửi một tin rồi kiểm `path` là `rules_only`. Xong thì đặt lại `true` (hoặc giá trị cũ). Các cờ khác trong cùng item: `feature_image`, `feature_voice`, `feature_rag`.
 
-<!-- TODO screenshot: câu trả lời của bot ở chế độ bảo trì / chỉ chạy luật -->
+![Câu trả lời ở chế độ bảo trì: 🟡 BOT CHƯA CHẮC CHẮN, dòng 🛠 Bot đang bảo trì, chỉ kiểm được dấu hiệu cơ bản, kèm dấu hiệu luật bắt được (tin mời việc nhẹ lương cao)](/images/5-Workshop/5.5/telegram-text-result.jpg)
 
 **3. Job lỗi lặp lại: DLQ.** Hàng đợi `jobs` chuyển message sang `jobs-dlq` sau 5 lần nhận lỗi. Function `worker-dlq` khi đó sửa tin "⏳" thành tin "hệ thống đang bận, vui lòng thử lại", và alarm `askfirst-<stage>-jobs-dlq-not-empty` bật (xem 5.7). Quy trình trong `infra/WORKER.md` ép lỗi bằng cách throttle function `ai`:
 

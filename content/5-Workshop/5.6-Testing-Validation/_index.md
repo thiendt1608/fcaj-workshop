@@ -24,7 +24,9 @@ export AWS_REGION=ap-southeast-1
    - A few seconds later the "⏳" message is edited into the verdict with a risk level and a short explanation (the `worker` called the `ai` function and rendered the reply).
 4. Send a screenshot of a made-up scam message (an image) and repeat. Images take longer because of OCR (see 5.6.5).
 
-<!-- TODO screenshot: Telegram chat showing the "⏳" message and the final verdict for a text message -->
+![The ⏳ message right after sending a text](/images/5-Workshop/5.5/telegram-text-pending.jpg)
+
+![The ⏳ message edited into the result (the test bot was in maintenance mode at capture time, see 5.6.4)](/images/5-Workshop/5.5/telegram-text-result.jpg)
 ![Verdict for an image message: 🔴 RẤT GIỐNG LỪA ĐẢO (very likely a scam), a fake bank SMS about expiring credit card points](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 #### 5.6.2 Test the webhook directly with curl
@@ -105,7 +107,7 @@ aws dynamodb update-item --table-name askfirst-$STAGE \
 
 Wait about 30 seconds, send a message, and check that `path` is `rules_only`. Set the value back to `true` (or to what it was before) when you are done. Other flags in the same item: `feature_image`, `feature_voice`, `feature_rag`.
 
-<!-- TODO screenshot: bot reply in maintenance / rules-only mode -->
+![Maintenance-mode reply: 🟡 BOT CHƯA CHẮC CHẮN, the line 🛠 Bot đang bảo trì (bot under maintenance, basic signals only), plus the rule signal it caught (easy-job, high-pay offer)](/images/5-Workshop/5.5/telegram-text-result.jpg)
 
 **3. Job fails repeatedly: DLQ.** The `jobs` queue redrives a message to `jobs-dlq` after 5 failed receives. The `worker-dlq` function then edits the "⏳" message into a "busy, please try again" message and the alarm `askfirst-<stage>-jobs-dlq-not-empty` fires (see 5.7). The procedure in `infra/WORKER.md` forces the failure by throttling the `ai` function:
 

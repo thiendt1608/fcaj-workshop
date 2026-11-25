@@ -103,7 +103,9 @@ This sets the Telegram menu commands `/batdau`, `/huongdan`, `/caidat`, `/nguoit
 5. Send a screenshot of a suspicious message to test OCR. The first image after a deploy is slower because the `ai` function downloads its models from S3.
 
 ![The team's test bot after /start: welcome message with the data policy, two buttons ✅ Tôi đồng ý / ❌ Không đồng ý; after tapping agree the bot confirms](/images/5-Workshop/5.5/telegram-consent.jpg)
-<!-- TODO screenshot: Telegram chat showing a text check: the "⏳" message edited into the result -->
+![Sending a self-written text: the bot immediately replies with ⏳ Cháu đang kiểm tra… (checking)](/images/5-Workshop/5.5/telegram-text-pending.jpg)
+
+![A few seconds later the ⏳ message is edited into the result. At capture time (25/11/2026) the test bot was in maintenance mode, so it only returned 🟡 BOT CHƯA CHẮC CHẮN (not sure) with basic signals; with the LLM on, the result is as detailed as the image check below](/images/5-Workshop/5.5/telegram-text-result.jpg)
 ![Sending a screenshot of a fake bank SMS (number and link redacted): the bot replies 🔴 RẤT GIỐNG LỪA ĐẢO with the reason, next steps and a Bot báo sai (report wrong) button](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 Feature flags live in the DynamoDB item `CONFIG#global` / `FLAGS`. If the item does not exist, the defaults are `llm_enabled=true`, `feature_image=true`, `feature_voice=false`, `feature_rag=true`, so nothing has to be created for this test.
