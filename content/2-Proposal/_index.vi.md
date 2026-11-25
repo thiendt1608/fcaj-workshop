@@ -107,7 +107,7 @@ Bot đóng vai "người thứ ba" xen vào trước khi tiền rời tài kho�
 
 **Cố ý không dùng:** API Gateway (Function URL là đủ), Step Functions (pipeline tuyến tính dưới 30 giây), OpenSearch / vector DB (corpus nhỏ, tính cosine trong RAM, RAG p95 45 ms trên Lambda), EC2/SageMaker GPU (đắt hơn nhiều so với Bedrock trả theo token ở quy mô này), Amazon Transcribe (voice đã hoãn), Textract, Bedrock Agents, VPC/NAT.
 
-**Luồng dữ liệu chính** (số bước khớp với sơ đồ)
+**Luồng dữ liệu chính** (tóm tắt; sơ đồ đánh số chi tiết 17 bước)
 
 1. Người cao tuổi chuyển tiếp tin; Telegram POST update tới Function URL của `webhook` kèm `secret_token` (kiểm bằng so sánh constant-time).
 2. `webhook` dedup `update_id`, kiểm đồng ý, gom tin vào `BUFFER#`, gửi "⏳ đang kiểm tra…" và đẩy job vào SQS với delay 3 giây. Telegram nhận phản hồi trong dưới 1 giây.
@@ -116,7 +116,7 @@ Bot đóng vai "người thứ ba" xen vào trước khi tiền rời tài kho�
 5. `ai` gọi Bedrock Guardrails, rồi gọi judge (Qwen3 32B; chuyển sang gpt-oss-120b khi độ tin cậy thấp hoặc lỗi), fuse điểm luật và điểm LLM thành mức, render câu trả lời tiếng Việt từ template.
 6. Nếu mức là `DANGEROUS` kèm hành động nguy hiểm, `worker` báo song song cho mọi người thân đã liên kết; trạng thái "đã báo" chỉ ghi khi Telegram trả `message_id`.
 7. `worker` sửa tin "⏳" thành câu trả lời cuối và ghi metadata `CHECK#` (TTL 30 ngày); hẹn nhắc lại sau 15 phút nếu chưa người thân nào xác nhận.
-8. Job lỗi 5 lần thì vào DLQ → CloudWatch alarm → email qua SNS.
+8. Job lỗi 5 lần thì vào DLQ: `worker-dlq` báo "bận" cho người dùng, CloudWatch alarm trên DLQ gửi email cho team qua SNS.
 
 {{% notice note %}}
 Chi tiết cấu hình trên stack `dev` đang deploy (`infra/template.yaml`): maximum concurrency với SQS là **5** cho `worker` và **2** cho `worker-dlq`; SnapStart là tham số **mặc định tắt** cho tới khi đo cold start (ADR-008); model OCR là RapidOCR PP-OCRv6 small. VietOCR được bật cùng RapidOCR từ ngày 24/11/2026.

@@ -41,7 +41,7 @@ The diagram follows one check from start to end. The numbers below match the num
 | 16–17 | `worker` stores a `CHECK#` record (metadata only, TTL 30 days) and may schedule a 15-minute follow-up job on SQS. A job that fails 5 times moves to the **DLQ**; a small `worker-dlq` Lambda tells the user the bot is busy, and a **CloudWatch alarm** fires. |
 
 {{% notice note %}}
-The diagram is the target design. In the stack deployed in this workshop: SnapStart is **off** by default (`WorkerSnapStart=None`), the OCR model is RapidOCR PP-OCRv6 small (plus optional VietOCR), voice/ASR is not deployed, the SNS topic for the alarm is optional (`AlarmTopicArn`), and GitHub Actions only builds and pushes the `ai` image through OIDC; `sam deploy` is run by hand.
+The diagram shows the team's running `dev` stack (checked on 25/11/2026): 4 Lambda functions, Bedrock in a separate account that `ai` assumes a role into, and the DLQ alarm emailing through SNS. When you deploy it yourself with this workshop: SnapStart is **off** by default (`WorkerSnapStart=None`), VietOCR is optional, the SNS topic for the alarm is optional (`AlarmTopicArn`, section 5.7.5), Bedrock is called in your own account unless you set `BEDROCK_ROLE_ARN`, and GitHub Actions only builds and pushes the `ai` image through OIDC; `sam deploy` is run by hand.
 {{% /notice %}}
 
 #### Services used and why

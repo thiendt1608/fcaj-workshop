@@ -41,7 +41,7 @@ Sơ đồ đi theo một lượt kiểm tra từ đầu đến cuối. Số th�
 | 16–17 | `worker` ghi bản ghi `CHECK#` (chỉ metadata, TTL 30 ngày) và có thể đặt job nhắc lại sau 15 phút trên SQS. Job lỗi 5 lần sẽ vào **DLQ**; một Lambda nhỏ `worker-dlq` báo người dùng là bot đang bận, và **CloudWatch alarm** chuyển sang trạng thái ALARM. |
 
 {{% notice note %}}
-Sơ đồ là thiết kế mục tiêu. Trong stack deploy ở workshop này: SnapStart **tắt** theo mặc định (`WorkerSnapStart=None`), model OCR là RapidOCR PP-OCRv6 small (thêm VietOCR nếu muốn), voice/ASR chưa deploy, SNS topic cho alarm là tuỳ chọn (`AlarmTopicArn`), và GitHub Actions chỉ build và đẩy image `ai` qua OIDC; `sam deploy` chạy bằng tay.
+Sơ đồ vẽ đúng stack `dev` nhóm đang chạy (đối chiếu ngày 25/11/2026): 4 Lambda, Bedrock ở account riêng mà `ai` assume role sang, alarm DLQ gửi email qua SNS. Khi bạn tự deploy theo workshop: SnapStart **tắt** theo mặc định (`WorkerSnapStart=None`), VietOCR là tuỳ chọn, SNS topic cho alarm là tuỳ chọn (`AlarmTopicArn`, mục 5.7.5), Bedrock gọi ngay trong account của bạn nếu không đặt `BEDROCK_ROLE_ARN`, và GitHub Actions chỉ build và đẩy image `ai` qua OIDC; `sam deploy` chạy bằng tay.
 {{% /notice %}}
 
 #### Các dịch vụ được dùng và lý do

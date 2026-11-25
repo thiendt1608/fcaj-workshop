@@ -107,7 +107,7 @@ The bot plays the role of the "third person" who steps in before the money leave
 
 **Deliberately not used:** API Gateway (Function URL is enough), Step Functions (linear pipeline under 30 s), OpenSearch / vector DB (small corpus, cosine in memory, RAG p95 45 ms on Lambda), EC2/SageMaker GPU (far more expensive than per-token Bedrock at this scale), Amazon Transcribe (voice postponed), Textract, Bedrock Agents, VPC/NAT.
 
-**Main data flow** (numbers match the diagram)
+**Main data flow** (summary; the diagram numbers 17 detailed steps)
 
 1. The elderly person forwards a message; Telegram POSTs the update to the `webhook` Function URL with a `secret_token` (checked in constant time).
 2. `webhook` deduplicates the `update_id`, checks consent, buffers the message (`BUFFER#`), sends "⏳ checking…", and puts a job on SQS with a 3 s delay. It answers Telegram in under 1 s.
@@ -116,7 +116,7 @@ The bot plays the role of the "third person" who steps in before the money leave
 5. `ai` calls Bedrock Guardrails, then the judge (Qwen3 32B; gpt-oss-120b on low confidence or error), fuses rule and LLM scores into a level, and renders the Vietnamese answer from a template.
 6. If the level is `DANGEROUS` with a risky action, `worker` alerts all linked family members in parallel; the "already alerted" state is recorded only after Telegram returns a `message_id`.
 7. `worker` edits the "⏳" message into the final answer and writes `CHECK#` metadata (TTL 30 days); a 15-minute reminder is scheduled if no family member acknowledged.
-8. A job that fails 5 times goes to the DLQ → CloudWatch alarm → SNS email.
+8. A job that fails 5 times goes to the DLQ: `worker-dlq` tells the user the bot is busy, and the CloudWatch alarm on the DLQ emails the team through SNS.
 
 {{% notice note %}}
 Configuration details of the deployed `dev` stack (`infra/template.yaml`): SQS maximum concurrency is **5** for `worker` and **2** for `worker-dlq`; SnapStart is a parameter that is **off by default** until cold starts are measured (ADR-008); the OCR model is RapidOCR PP-OCRv6 small. VietOCR was enabled next to RapidOCR on 24/11/2026.
