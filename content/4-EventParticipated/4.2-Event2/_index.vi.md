@@ -17,7 +17,7 @@ AWS Cloud & AI Day Vietnam là sự kiện Cloud và AI lớn trong năm của A
 
 ### Diễn giả
 
-Keynote do lãnh đạo AWS và khách hàng của AWS trình bày, phát trực tiếp từ Hà Nội. <!-- TODO(not verified): tài liệu mình lưu không có tên diễn giả; bổ sung nếu còn nhớ. -->
+Keynote do lãnh đạo AWS và khách hàng của AWS trình bày, phát trực tiếp từ Hà Nội.
 
 ### Nội dung nổi bật
 

@@ -19,7 +19,7 @@ Ngày hội Cloud và AI do sinh viên tổ chức cho sinh viên, đồng tổ 
 
 ### Diễn giả
 
-- Hai phiên chuyên gia: “Câu chuyện đồng hành cùng những nhà phát triển trẻ” và “Bảo mật môi trường điện toán đám mây doanh nghiệp”. <!-- TODO(not verified): tài liệu mình lưu không có tên diễn giả. -->
+- Hai phiên chuyên gia: “Câu chuyện đồng hành cùng những nhà phát triển trẻ” và “Bảo mật môi trường điện toán đám mây doanh nghiệp”.
 - Đại diện 4 AWS Student Builder Group: HCMUTE, SGU, HUFLIT, PTIT.
 
 ### Nội dung nổi bật

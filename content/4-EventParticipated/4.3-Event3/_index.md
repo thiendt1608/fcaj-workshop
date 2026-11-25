@@ -19,7 +19,7 @@ A Cloud and AI day built by students for students, co-organized by 4 AWS Student
 
 ### Speakers
 
-- Two expert sessions: “Journeying with Young Builders” and “Enterprise Cloud Environment Security”. <!-- TODO(not verified): my saved material has no speaker names. -->
+- Two expert sessions: “Journeying with Young Builders” and “Enterprise Cloud Environment Security”.
 - Representatives of 4 AWS Student Builder Groups: HCMUTE, SGU, HUFLIT, PTIT.
 
 ### Highlights

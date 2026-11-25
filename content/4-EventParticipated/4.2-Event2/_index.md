@@ -17,7 +17,7 @@ AWS Cloud & AI Day Vietnam is AWS's main Cloud and AI event of the year in Vietn
 
 ### Speakers
 
-The keynotes were given by AWS leaders and AWS customers, streamed live from Hanoi. <!-- TODO(not verified): my saved material has no speaker names; add them if I remember. -->
+The keynotes were given by AWS leaders and AWS customers, streamed live from Hanoi.
 
 ### Highlights
 
