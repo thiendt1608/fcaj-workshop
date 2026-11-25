@@ -99,7 +99,7 @@ cd ..
 
 If you skip `vietocr`, OCR still works with RapidOCR alone: the function logs `ocr_reread_failed` once and continues.
 
-<!-- TODO screenshot: S3 console, bucket askfirst-dev-data-<ACCOUNT_ID>, showing the ocr/, embedder/ and kb_index/ prefixes -->
+![Bucket askfirst-dev-data-<ACCOUNT_ID> in the team's dev environment at capture time (25/11/2026) has no objects yet: the ocr/, embedder/, kb_index/ artifacts have not been uploaded. Following this guide, your bucket will have these three prefixes](/images/5-Workshop/5.4/s3-data-bucket.jpg)
 
 #### Step 4: Build and push the image with GitHub Actions
 
@@ -133,7 +133,7 @@ aws ecr describe-images --region ap-southeast-1 --repository-name askfirst-ai \
 export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-ai:<GIT_SHA>"
 ```
 
-<!-- TODO screenshot: GitHub Actions run "AI image" (workflow_dispatch) all steps green, with the summary showing the image size and the Deploy line (account ID blurred) -->
+![The AI image workflow on a pull request: build, the ≤ 2 GB size check, library imports and the handler smoke test via Lambda RIE are all green; the ECR push and Push steps are skipped because they only run on manual workflow_dispatch. The team repo has not run workflow_dispatch yet, so there is no Deploy screenshot](/images/5-Workshop/5.4/github-actions-ai-image.jpg)
 ![ECR console: pushed images tagged by commit. The team's current dev environment uses the repository askfirst-dev-ai, not the askfirst-ai name the askfirst-github-oidc stack creates](/images/5-Workshop/5.4/ecr-images.jpg)
 
 <!-- TODO(not verified): building locally with `docker build -f ai/Dockerfile -t askfirst-ai .` (add `--platform linux/amd64` on Apple Silicon) and pushing with docker login/tag/push like the workflow's Push step. The Dockerfile says to build on GitHub Actions; the team has not used the local path. -->

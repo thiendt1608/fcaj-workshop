@@ -99,7 +99,7 @@ cd ..
 
 Nếu bỏ qua `vietocr`, OCR vẫn chạy với riêng RapidOCR: function ghi log `ocr_reread_failed` một lần rồi chạy tiếp.
 
-<!-- TODO screenshot: S3 console, bucket askfirst-dev-data-<ACCOUNT_ID>, thấy các prefix ocr/, embedder/ và kb_index/ -->
+![Bucket askfirst-dev-data-<ACCOUNT_ID> trên môi trường dev của nhóm lúc chụp (25/11/2026) chưa có object nào: các artifact ocr/, embedder/, kb_index/ chưa được tải lên. Làm theo hướng dẫn thì bucket của bạn sẽ có ba prefix này](/images/5-Workshop/5.4/s3-data-bucket.jpg)
 
 #### Bước 4: Build và đẩy image bằng GitHub Actions
 
@@ -133,7 +133,7 @@ aws ecr describe-images --region ap-southeast-1 --repository-name askfirst-ai \
 export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-ai:<GIT_SHA>"
 ```
 
-<!-- TODO screenshot: lần chạy "AI image" (workflow_dispatch) trên GitHub Actions, mọi bước xanh, summary có dung lượng image và dòng Deploy (làm mờ account ID) -->
+![Workflow AI image chạy trên pull request: build, kiểm dung lượng ≤ 2 GB, import thư viện, gọi thử handler qua Lambda RIE đều xanh; hai bước Đẩy lên ECR và Push bị bỏ qua vì chỉ chạy khi bấm tay (workflow_dispatch). Repo của nhóm chưa chạy workflow_dispatch nên chưa có ảnh bước Deploy](/images/5-Workshop/5.4/github-actions-ai-image.jpg)
 ![ECR console: các image đã đẩy, tag theo commit. Môi trường dev hiện tại của nhóm dùng repository askfirst-dev-ai, khác tên askfirst-ai mà stack askfirst-github-oidc tạo](/images/5-Workshop/5.4/ecr-images.jpg)
 
 <!-- TODO(not verified): build trên máy bằng `docker build -f ai/Dockerfile -t askfirst-ai .` (thêm `--platform linux/amd64` trên Apple Silicon) rồi docker login/tag/push như bước Push của workflow. Dockerfile ghi là build trên GitHub Actions; team chưa dùng cách build trên máy. -->

@@ -70,7 +70,15 @@ Bạn cũng có thể chạy script kiểm tra chỉ đọc, script này thử c
 ./infra/verify-dev.sh ap-southeast-1 dev
 ```
 
-<!-- TODO screenshot: output terminal của hai lệnh curl (401, rồi IGNORED / 200) hoặc của verify-dev.sh với toàn bộ [PASS] -->
+Output thật trên môi trường dev (25/11/2026), ca không có secret:
+
+```text
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -d '{}'
+UNAUTHORIZED
+401
+```
+
+<!-- TODO screenshot: ca có secret (IGNORED / 200) hoặc verify-dev.sh với toàn bộ [PASS] -->
 
 #### Bước 3: Đăng ký webhook với Telegram
 

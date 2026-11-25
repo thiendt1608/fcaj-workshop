@@ -54,7 +54,18 @@ Mã trả về lấy từ `WebhookHandler.handleRequest` trong `backend/ScamProt
 
 Các ca biên khác webhook xử lý (đều trả `200` để Telegram không gửi lại): cùng `update_id` tới hai lần (`DUPLICATE`), file không hỗ trợ như tài liệu, âm thanh (`UNSUPPORTED_*`), người dùng chưa đồng ý chính sách (`CONSENT_REQUIRED`), người dùng vượt rate limit (`RATE_LIMITED`). Hãy thử các ca này từ app Telegram thay vì tự dựng JSON, vì update giả mang chat ID thật sẽ khiến bot gửi tin thật.
 
-<!-- TODO screenshot: output terminal của 4 lệnh curl (không lộ giá trị secret) -->
+Output thật trên môi trường dev (25/11/2026) cho hai ca không cần secret:
+
+```text
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -d '{}'
+UNAUTHORIZED
+401
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -H "X-Telegram-Bot-Api-Secret-Token: wrong" -d '{}'
+UNAUTHORIZED
+401
+```
+
+<!-- TODO screenshot: output hai ca có secret đúng (IGNORED 200, INVALID_JSON 400), không lộ giá trị secret -->
 <!-- TODO screenshot: output của ./infra/verify-dev.sh -->
 
 #### 5.6.3 Xem kết quả trong CloudWatch Logs và DynamoDB
@@ -86,7 +97,9 @@ aws dynamodb scan --table-name askfirst-$STAGE \
 `path` cho biết kết quả được tạo ra theo đường nào: `fast` (luật là đủ), `cache`, `llm` (judge Qwen3 32B), `escalated` (gọi thêm model dự phòng `gpt-oss-120b`) hoặc `rules_only` (không có LLM, xem 5.6.4).
 
 ![Cùng một trace_id ở log group worker và ai: analyze, render, rồi worker ghi kết quả path=llm](/images/5-Workshop/5.6/trace-id-logs.jpg)
-<!-- TODO screenshot: DynamoDB Explore items với một item CHECK# (che user ID) -->
+![Explore items, scan bảng askfirst-dev với bộ lọc SK bắt đầu bằng CHECK#: 33 item, PK dạng USER#tg:<USER_ID> (đã che)](/images/5-Workshop/5.6/dynamodb-check-items.jpg)
+
+![Một item CHECK# mở ra: chỉ có kết quả (level UNSURE, path rules_only, grp, scenario, created_at…), không lưu nội dung tin](/images/5-Workshop/5.6/dynamodb-check-item.jpg)
 
 #### 5.6.4 Kịch bản lỗi
 

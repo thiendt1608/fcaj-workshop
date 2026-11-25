@@ -54,7 +54,18 @@ The expected codes come from `WebhookHandler.handleRequest` in `backend/ScamProt
 
 Other edge cases the webhook handles (each returns `200` so Telegram does not retry): the same `update_id` delivered twice (`DUPLICATE`), unsupported media such as documents or audio (`UNSUPPORTED_*`), a user who has not accepted the policy (`CONSENT_REQUIRED`), and a user over the rate limit (`RATE_LIMITED`). Test these from the Telegram app rather than with hand-made JSON, because a fake update with a real chat ID makes the bot send real messages.
 
-<!-- TODO screenshot: terminal output of the four curl tests (no secret value visible) -->
+Actual output on the dev environment (25/11/2026) for the two cases that need no secret:
+
+```text
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -d '{}'
+UNAUTHORIZED
+401
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -H "X-Telegram-Bot-Api-Secret-Token: wrong" -d '{}'
+UNAUTHORIZED
+401
+```
+
+<!-- TODO screenshot: output of the two correct-secret cases (IGNORED 200, INVALID_JSON 400), no secret value visible -->
 <!-- TODO screenshot: output of ./infra/verify-dev.sh -->
 
 #### 5.6.3 Check the result in CloudWatch Logs and DynamoDB
@@ -86,7 +97,9 @@ aws dynamodb scan --table-name askfirst-$STAGE \
 `path` tells you how the verdict was produced: `fast` (rules were enough), `cache`, `llm` (Qwen3 32B judge), `escalated` (backup model `gpt-oss-120b` also called) or `rules_only` (no LLM, see 5.6.4).
 
 ![One trace_id across the worker and ai log groups: analyze, render, then the worker logs the result with path=llm](/images/5-Workshop/5.6/trace-id-logs.jpg)
-<!-- TODO screenshot: DynamoDB Explore items view with a CHECK# item (blur the user ID) -->
+![Explore items, scanning table askfirst-dev with the filter SK begins with CHECK#: 33 items, PK of the form USER#tg:<USER_ID> (masked)](/images/5-Workshop/5.6/dynamodb-check-items.jpg)
+
+![One CHECK# item opened: only the result (level UNSURE, path rules_only, grp, scenario, created_at…), no message content](/images/5-Workshop/5.6/dynamodb-check-item.jpg)
 
 #### 5.6.4 Failure scenarios
 

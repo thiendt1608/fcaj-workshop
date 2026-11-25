@@ -70,7 +70,15 @@ You can also run the read-only check script, which tests both cases and the reso
 ./infra/verify-dev.sh ap-southeast-1 dev
 ```
 
-<!-- TODO screenshot: terminal output of the two curl commands (401, then IGNORED / 200) or of verify-dev.sh with all [PASS] -->
+Actual output on the dev environment (25/11/2026), no-secret case:
+
+```text
+$ curl -s -w "\n%{http_code}\n" -X POST "$FUNCTION_URL" -H "Content-Type: application/json" -d '{}'
+UNAUTHORIZED
+401
+```
+
+<!-- TODO screenshot: the with-secret case (IGNORED / 200) or verify-dev.sh with all [PASS] -->
 
 #### Step 3: Register the webhook with Telegram
 
