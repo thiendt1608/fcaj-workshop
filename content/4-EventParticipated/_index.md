@@ -11,6 +11,6 @@ Events I attended during the internship (FCAJ rule: at least 3 events, each with
 
 | # | Event | Date | Location | Role |
 |---|---|---|---|---|
-| 1 | [Event 1](4.1-event1/) | _(to fill in)_ | _(to fill in)_ | Attendee |
-| 2 | [Event 2](4.2-event2/) | _(to fill in)_ | _(to fill in)_ | Attendee |
-| 3 | [Event 3](4.3-event3/) | _(to fill in)_ | _(to fill in)_ | Attendee |
+| 1 | [Buildrathon Kickoff: Code the Future with CMC Global](4.1-event1/) | 26/09/2026 | AWS office, Bitexco, HCMC | Attendee |
+| 2 | [AWS Cloud & AI Day Vietnam 2026 (Watch Party)](4.2-event2/) | 29/09/2026 | AWS office, HCMC | Attendee |
+| 3 | [AWS Student Community Day Vietnam 2026](4.3-event3/) | 21/11/2026 | Level 26, Bitexco, HCMC | Attendee |
