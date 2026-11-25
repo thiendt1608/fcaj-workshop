@@ -165,13 +165,13 @@ Giả định tải: **3.000 lượt kiểm tra/tháng**, văn bản và ảnh, 
 - **Free Tier:** tài khoản vẫn hưởng mức always-free. Tháng 11 tính đến 25/11: Lambda ≈ 8.200/400.000 GB-giây và 273/1 triệu request, SQS ≈ 178.000/1 triệu request, CloudWatch alarm 0,37/10. Cột "Có always-free" đúng với tài khoản này.
 - **Thời gian chạy Lambda** (CloudWatch `Duration`, 14 ngày, traffic test của nhóm): `ai` 248 lượt, TB 2,7 s, p95 9,7 s; `worker` 73 lượt, TB 4,6 s, p95 14,2 s; `webhook` 50 lượt, TB 1,0 s, p95 3,0 s. `ai` và `worker` nằm trong mức 5 s đã nhập vào Calculator. `webhook` chạy lâu gấp đôi mức 0,5 s giả định, nên dòng này lên khoảng 0,06 USD khi không có Free Tier; tổng gần như không đổi. Mẫu nhỏ và là traffic test, chưa phải tải thật.
 - **Chi phí thật, tài khoản dev:** AWS Budgets ghi nhận ≈ 0,09 USD cho tháng 11 đến 25/11, dự báo cả tháng ≈ 0,10 USD (không gồm Bedrock).
-- **Chi phí thật, tài khoản chạy Bedrock:** AWS Budgets ghi nhận ≈ 3,93 USD cho tháng 11 đến 25/11. Tính lại từ metric CloudWatch của Bedrock (cùng kỳ, đơn giá 0,1545 / 0,618 USD cho 1 triệu token):
-  - Qwen3 32B: 4.800 lượt, 11,8 triệu token vào, 0,95 triệu token ra ≈ 2,42 USD.
-  - gpt-oss-120b: 987 lượt, 2,5 triệu token vào, 0,44 triệu token ra ≈ 0,66 USD.
-  - Guardrails: 3.286 lượt `ApplyGuardrail`, 3.288 text unit, chỉ có policy content filter (`PROMPT_ATTACK`) ≈ 0,26–0,49 USD tuỳ dòng giá.
-  - Cộng lại ≈ 3,3–3,6 USD; còn ≈ 0,4–0,6 USD trong số của Budgets chưa tách được theo dịch vụ.
+- **Chi phí thật, tài khoản chạy Bedrock** (Cost Explorer, 01–25/11): tổng **3,93 USD**, gồm 3,57 USD Bedrock và 0,36 USD thuế (≈ 10%).
+  - Qwen3 32B: 11,8 triệu token vào, 0,94 triệu token ra = 2,40 USD.
+  - gpt-oss-120b (dự phòng): 2,5 triệu token vào, 0,44 triệu token ra = 0,66 USD.
+  - Guardrails: 3.266 text unit, tính theo dòng `ContentPolicyUnitsConsumed` (0,15 USD / 1.000 unit) = 0,49 USD. Dự toán dùng đúng dòng giá này.
+  - Gemma 3 12B (chạy benchmark G1): 0,02 USD.
   - Phần lớn số lượt này là các lần chạy eval và test của nhóm, không phải người dùng thật.
-- **Chưa kiểm:** AWS tính Guardrails theo dòng giá nào (0,15 hay 0,08 USD / 1.000 unit; dự toán dùng 0,15 cho chắc), và chi tiết từng dịch vụ trong Cost Explorer. <!-- TODO(not verified): dòng giá Guardrails và phần chênh ≈ 0,4–0,6 USD, cần Cost Explorer theo usage type -->
+- **Thuế:** hoá đơn có thêm ≈ 10% thuế mà bảng dự toán ở trên chưa tính (Pricing Calculator cũng không tính thuế).
 
 **Tối ưu chi phí**
 
