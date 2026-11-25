@@ -9,9 +9,7 @@ pre: " <b> 4.2. </b> "
 
 # Bài thu hoạch “AWS Cloud & AI Day Vietnam 2026 — Watch Party tại TP.HCM”
 
-**Thời gian:** Thứ Ba 29/09/2026 · **Địa điểm:** văn phòng AWS tại TP.HCM (sân khấu chính ở JW Marriott Hà Nội, phát trực tiếp vào TP.HCM) · **Vai trò:** Người tham dự
-
-<!-- nháp: badge ghi "AWS Cloud and AI Day Hanoi"; trang này giả định mình dự buổi Watch Party ở văn phòng AWS TP.HCM. Nếu mình ra Hà Nội thì sửa dòng địa điểm. -->
+**Thời gian:** Thứ Ba 29/09/2026 · **Địa điểm:** Văn phòng AWS, Tầng 26 Bitexco, TP.HCM · **Vai trò:** Người tham dự
 
 ### Mục đích của sự kiện
 

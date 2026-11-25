@@ -9,9 +9,7 @@ pre: " <b> 4.2. </b> "
 
 # Event report: “AWS Cloud & AI Day Vietnam 2026 — Watch Party in Ho Chi Minh City”
 
-**Date:** Tuesday 29/09/2026 · **Location:** AWS office in Ho Chi Minh City (main stage at JW Marriott Hanoi, streamed live to HCMC) · **Role:** Attendee
-
-<!-- draft: the badge says "AWS Cloud and AI Day Hanoi"; this page assumes I attended the Watch Party at the AWS office in HCMC. If I went to Hanoi, fix the location line. -->
+**Date:** Tuesday 29/09/2026 · **Location:** AWS office, Level 26 Bitexco, Ho Chi Minh City · **Role:** Attendee
 
 ### Event objectives
 

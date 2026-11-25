@@ -9,7 +9,7 @@ pre: " <b> 4.3. </b> "
 
 # Bài thu hoạch “AWS Student Community Day Vietnam 2026”
 
-**Thời gian:** Thứ Bảy 21/11/2026, 08:30–11:30 · **Địa điểm:** tầng 26, Bitexco Financial Tower, TP.HCM · **Vai trò:** Người tham dự
+**Thời gian:** Thứ Bảy 21/11/2026, 08:30–11:30 · **Địa điểm:** Văn phòng AWS, Tầng 26 Bitexco, TP.HCM · **Vai trò:** Người tham dự
 
 ![Agenda AWS Student Community Day Vietnam 2026 và ban tổ chức](/images/4-EventParticipated/event3-agenda.jpg)
 

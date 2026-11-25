@@ -9,7 +9,7 @@ pre: " <b> 4.3. </b> "
 
 # Event report: “AWS Student Community Day Vietnam 2026”
 
-**Date:** Saturday 21/11/2026, 08:30–11:30 · **Location:** Level 26, Bitexco Financial Tower, Ho Chi Minh City · **Role:** Attendee
+**Date:** Saturday 21/11/2026, 08:30–11:30 · **Location:** AWS office, Level 26 Bitexco, Ho Chi Minh City · **Role:** Attendee
 
 ![AWS Student Community Day Vietnam 2026 agenda and organizers](/images/4-EventParticipated/event3-agenda.jpg)
 

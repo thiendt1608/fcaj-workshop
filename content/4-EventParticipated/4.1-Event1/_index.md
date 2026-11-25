@@ -9,7 +9,7 @@ pre: " <b> 4.1. </b> "
 
 # Event report: “Buildrathon Kickoff: Code the Future with CMC Global”
 
-**Date:** Saturday 26/09/2026, 09:00–12:00 · **Location:** AWS Vietnam office, 26th floor, Bitexco Financial Tower, Ho Chi Minh City · **Role:** Attendee
+**Date:** Saturday 26/09/2026, 09:00–12:00 · **Location:** AWS office, Level 26 Bitexco, Ho Chi Minh City · **Role:** Attendee
 
 ![Poster for Buildrathon Kickoff: Code the Future with CMC Global](/images/4-EventParticipated/event1-poster.jpg)
 
