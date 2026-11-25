@@ -120,7 +120,7 @@ Mọi lệnh phía sau đều chạy từ thư mục gốc repo này, trừ khi 
 4. Nhập username kết thúc bằng `bot`, ví dụ `<BOT_USERNAME>` (phải là duy nhất trên Telegram).
 5. BotFather trả về HTTP API token dạng `<BOT_ID>:<SECRET_PART>`. Trong phần còn lại của hướng dẫn, đây là `<TELEGRAM_BOT_TOKEN>`.
 
-<!-- TODO screenshot: chat với BotFather sau lệnh /newbot, token đã được làm mờ -->
+![Ví dụ luồng /newbot với BotFather (bot cá nhân dùng để minh hoạ, không phải bot Ask First): đặt tên, chọn username kết thúc bằng bot, nhận token. Token đã được che thành <BOT_TOKEN>](/images/5-Workshop/5.2/botfather-newbot.jpg)
 
 {{% notice warning %}}
 Bot token cho phép điều khiển toàn bộ bot. Chỉ giữ token trong password manager và SSM Parameter Store (5.5). Không dán token vào chat, ảnh chụp màn hình, Git hay `samconfig.toml`. Nếu lộ, gửi `/revoke` cho BotFather và lưu token mới.

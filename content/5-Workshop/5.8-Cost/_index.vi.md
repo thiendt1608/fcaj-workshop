@@ -30,7 +30,7 @@ Trang này đưa ra chi phí hằng tháng để chạy Ask First ở mức tả
 - Cột "Có always-free" giả định tài khoản vẫn hưởng mức always-free của Lambda, SQS, CloudWatch và DynamoDB. <!-- TODO(not verified): tài khoản team còn hưởng các mức always-free này hay không (Billing > Free Tier). -->
 - Khoản lớn nhất là Bedrock (≈ 2,1 USD) và CloudWatch (2,35 USD khi không có Free Tier).
 
-<!-- TODO screenshot: trang tóm tắt dự toán trên AWS Pricing Calculator (link ở trên) -->
+![Dự toán trên AWS Pricing Calculator (24/11/2026): 4,04 USD/tháng, 48,48 USD/12 tháng cho 8 dòng Lambda, SQS, DynamoDB, S3, ECR, CloudWatch. Chưa gồm Bedrock](/images/5-Workshop/5.8/pricing-calculator.jpg)
 
 #### 5.8.2 Giả định
 

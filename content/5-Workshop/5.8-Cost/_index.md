@@ -30,7 +30,7 @@ This page gives the monthly cost of running Ask First for the target load, how t
 - The "with always-free" column assumes the account still gets the always-free Lambda, SQS, CloudWatch and DynamoDB tiers. <!-- TODO(not verified): whether the team account still has these always-free tiers (Billing > Free Tier). -->
 - The largest items are Bedrock (≈ 2.1 USD) and CloudWatch (2.35 USD without Free Tier).
 
-<!-- TODO screenshot: AWS Pricing Calculator estimate summary page (the link above) -->
+![AWS Pricing Calculator estimate (24/11/2026): 4.04 USD/month, 48.48 USD/12 months across 8 lines for Lambda, SQS, DynamoDB, S3, ECR, CloudWatch. Bedrock not included](/images/5-Workshop/5.8/pricing-calculator.jpg)
 
 #### 5.8.2 Assumptions
 

@@ -102,9 +102,9 @@ Lệnh này đặt các lệnh trong menu Telegram: `/batdau`, `/huongdan`, `/ca
 4. Bot trả lời ngay bằng một tin bắt đầu bằng "⏳". Vài giây sau, chính tin đó được sửa thành kết quả: mức rủi ro, kịch bản lừa đảo khớp, lý do và việc cần làm ngay.
 5. Gửi ảnh chụp màn hình một tin đáng ngờ để thử OCR. Ảnh đầu tiên sau khi deploy sẽ chậm hơn vì function `ai` phải tải model từ S3.
 
-<!-- TODO screenshot: chat Telegram có tin xin đồng ý và nút ✅ Đồng ý -->
+![Bot test của nhóm sau /start: tin chào kèm chính sách dữ liệu, hai nút ✅ Tôi đồng ý / ❌ Không đồng ý, bấm đồng ý thì bot xác nhận](/images/5-Workshop/5.5/telegram-consent.jpg)
 <!-- TODO screenshot: chat Telegram kiểm tra văn bản: tin "⏳" được sửa thành kết quả -->
-<!-- TODO screenshot: chat Telegram kiểm tra ảnh chụp màn hình và kết quả -->
+![Gửi ảnh chụp SMS giả ngân hàng (đã che số và link): bot trả 🔴 RẤT GIỐNG LỪA ĐẢO, lý do, việc cần làm và nút Bot báo sai](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 Cờ tính năng nằm ở item DynamoDB `CONFIG#global` / `FLAGS`. Nếu item chưa tồn tại thì giá trị mặc định là `llm_enabled=true`, `feature_image=true`, `feature_voice=false`, `feature_rag=true`, nên không cần tạo gì thêm cho lần thử này.
 

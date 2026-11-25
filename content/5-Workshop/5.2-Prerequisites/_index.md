@@ -120,7 +120,7 @@ All later commands start from this repository root unless a step says otherwise.
 4. Enter a username that ends with `bot`, for example `<BOT_USERNAME>` (it must be unique on Telegram).
 5. BotFather replies with an HTTP API token of the form `<BOT_ID>:<SECRET_PART>`. This is `<TELEGRAM_BOT_TOKEN>` in the rest of this guide.
 
-<!-- TODO screenshot: BotFather chat after /newbot with the token blurred out -->
+![Example /newbot flow with BotFather (a personal bot used for illustration, not the Ask First bot): pick a name, a username ending in bot, receive the token. The token is masked as <BOT_TOKEN>](/images/5-Workshop/5.2/botfather-newbot.jpg)
 
 {{% notice warning %}}
 The bot token gives full control of the bot. Keep it only in a password manager and in SSM Parameter Store (5.5). Do not paste it into chats, screenshots, Git or `samconfig.toml`. If it leaks, send `/revoke` to BotFather and store the new token.

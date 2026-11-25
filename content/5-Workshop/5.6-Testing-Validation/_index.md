@@ -25,7 +25,7 @@ export AWS_REGION=ap-southeast-1
 4. Send a screenshot of a made-up scam message (an image) and repeat. Images take longer because of OCR (see 5.6.5).
 
 <!-- TODO screenshot: Telegram chat showing the "⏳" message and the final verdict for a text message -->
-<!-- TODO screenshot: Telegram chat showing the verdict for an image message -->
+![Verdict for an image message: 🔴 RẤT GIỐNG LỪA ĐẢO (very likely a scam), a fake bank SMS about expiring credit card points](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 #### 5.6.2 Test the webhook directly with curl
 

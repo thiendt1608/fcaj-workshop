@@ -25,7 +25,7 @@ export AWS_REGION=ap-southeast-1
 4. Gửi thêm một ảnh chụp màn hình tin lừa đảo tự soạn và làm lại. Tin ảnh chậm hơn vì phải chạy OCR (xem 5.6.5).
 
 <!-- TODO screenshot: khung chat Telegram có tin "⏳" và kết quả cuối cho tin văn bản -->
-<!-- TODO screenshot: khung chat Telegram có kết quả cho tin ảnh -->
+![Kết quả cho tin ảnh: 🔴 RẤT GIỐNG LỪA ĐẢO – SMS giả ngân hàng báo điểm thưởng thẻ tín dụng hết hạn](/images/5-Workshop/5.5/telegram-image-check.jpg)
 
 #### 5.6.2 Gọi thẳng webhook bằng curl
 
