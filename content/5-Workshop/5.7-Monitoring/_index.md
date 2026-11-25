@@ -104,7 +104,7 @@ aws cloudwatch describe-alarms --alarm-names askfirst-dev-jobs-dlq-not-empty \
 
 To see it fire, use the DLQ test in 5.6.4.
 
-![Alarm askfirst-dev-jobs-dlq-not-empty in OK state. The team's dev environment has no SNS action attached yet, so Actions shows No actions](/images/5-Workshop/5.7/alarms.jpg)
+![Alarm askfirst-dev-jobs-dlq-not-empty in OK state. Taken before the team attached SNS (25/11/2026), so Actions still shows No actions](/images/5-Workshop/5.7/alarms.jpg)
 
 #### 5.7.5 Optional: email notification through SNS
 
@@ -117,7 +117,14 @@ aws sns subscribe --topic-arn "$TOPIC_ARN" --protocol email --notification-endpo
 sam deploy --parameter-overrides Stage=dev AlarmTopicArn="$TOPIC_ARN" ...   # keep your other overrides
 ```
 
-The team's dev stack is currently deployed with an empty `AlarmTopicArn`, so the DLQ alarm has no actions (checked 25/11/2026). Follow the steps above to get email alerts.
+The team's dev stack attached the topic `askfirst-dev-alarms` on 25/11/2026 (only the `AlarmTopicArn` parameter changed; the change set modified only `JobsDlqAlarm`). To test the email without breaking a job, force the alarm into `ALARM`; it returns to `OK` at the next evaluation:
+
+```bash
+aws cloudwatch set-alarm-state --alarm-name askfirst-dev-jobs-dlq-not-empty \
+  --state-value ALARM --state-reason "Test SNS email"
+```
+
+Test on 25/11/2026: the alarm history shows `Successfully executed action` on the topic, SNS `NumberOfNotificationsDelivered` = 2 (the `ALARM` email and the `OK` email), `NumberOfNotificationsFailed` = 0.
 
 #### 5.7.6 Gaps you should know about
 

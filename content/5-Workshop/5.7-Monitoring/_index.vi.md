@@ -104,7 +104,7 @@ aws cloudwatch describe-alarms --alarm-names askfirst-dev-jobs-dlq-not-empty \
 
 Muốn thấy alarm bật, chạy bài kiểm tra DLQ ở 5.6.4.
 
-![Alarm askfirst-dev-jobs-dlq-not-empty ở trạng thái OK. Môi trường dev của nhóm chưa gắn SNS action nên cột Actions là No actions](/images/5-Workshop/5.7/alarms.jpg)
+![Alarm askfirst-dev-jobs-dlq-not-empty ở trạng thái OK. Ảnh chụp trước khi nhóm gắn SNS (25/11/2026) nên cột Actions còn là No actions](/images/5-Workshop/5.7/alarms.jpg)
 
 #### 5.7.5 Tuỳ chọn: email qua SNS
 
@@ -117,7 +117,14 @@ aws sns subscribe --topic-arn "$TOPIC_ARN" --protocol email --notification-endpo
 sam deploy --parameter-overrides Stage=dev AlarmTopicArn="$TOPIC_ARN" ...   # giữ các override khác
 ```
 
-Stack dev của nhóm hiện deploy với `AlarmTopicArn` rỗng, nên alarm DLQ không có action nào (kiểm 25/11/2026). Muốn nhận email thì làm các bước trên.
+Stack dev của nhóm đã gắn topic `askfirst-dev-alarms` ngày 25/11/2026 (chỉ đổi tham số `AlarmTopicArn`, change set chỉ sửa `JobsDlqAlarm`). Muốn thử email mà không cần làm hỏng job, ép alarm sang `ALARM`; lần đánh giá kế tiếp alarm tự về `OK`:
+
+```bash
+aws cloudwatch set-alarm-state --alarm-name askfirst-dev-jobs-dlq-not-empty \
+  --state-value ALARM --state-reason "Test SNS email"
+```
+
+Lần thử ngày 25/11/2026: lịch sử alarm ghi `Successfully executed action` tới topic, metric SNS `NumberOfNotificationsDelivered` = 2 (email `ALARM` và email `OK`), `NumberOfNotificationsFailed` = 0.
 
 #### 5.7.6 Các điểm còn thiếu
 
