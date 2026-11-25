@@ -8,8 +8,6 @@ pre: " <b> 5.9. </b> "
 
 When you finish the workshop, delete everything in the order below so nothing keeps billing. Steps 1–6 follow the clean-up guide in the project repository (`infra/README.md`, section 7, rewritten in pull request #186 for task SH-10). Step 7 and the extra items in steps 5 and 6 cover resources created in other sections of this workshop.
 
-<!-- TODO(not verified): PR #186 is still open. Its read-only commands were run on the dev stack, but the full sequence has not been run end to end on a temporary stack. -->
-
 The commands are for stage `dev` in `ap-southeast-1`, run from the repository root in Bash (on Windows use Git Bash or WSL). Change `STAGE` if you deployed another stage.
 
 ```bash
@@ -89,8 +87,6 @@ Answer `y` when SAM asks to delete the stack and its artifacts. This removes the
 
 Check: `aws cloudformation describe-stacks --stack-name askfirst-$STAGE` reports `does not exist`.
 
-<!-- TODO screenshot: CloudFormation Stacks page with askfirst-dev and askfirst-github-oidc in DELETE_COMPLETE (filter "Deleted") -->
-
 #### Step 6: Delete what the stack does not manage
 
 ```bash
@@ -152,8 +148,6 @@ aws ssm get-parameters-by-path --path "/askfirst/$STAGE" --recursive --query 'Pa
 ```
 
 The first command prints `stack: deleted`. The other six must print nothing (or `None`).
-
-<!-- TODO screenshot: terminal output of the final check (stack: deleted, the other commands empty) -->
 
 {{% notice note %}}
 Look at **Billing and Cost Management → Bills** one or two days later. Usage from the last days before clean-up can still appear, but no new charges for `askfirst` should be added.

@@ -78,8 +78,6 @@ UNAUTHORIZED
 401
 ```
 
-<!-- TODO screenshot: ca có secret (IGNORED / 200) hoặc verify-dev.sh với toàn bộ [PASS] -->
-
 #### Bước 3: Đăng ký webhook với Telegram
 
 `scripts/set_webhook.py` gọi `setWebhook` của Telegram Bot API với Function URL và secret, đăng ký nhận các update `message`, `callback_query` và `my_chat_member`, rồi in kết quả `getWebhookInfo`. Script đọc `TELEGRAM_BOT_TOKEN` và `TELEGRAM_WEBHOOK_SECRET` từ biến môi trường (đã export ở trên), và từ chối đăng ký webhook nếu thiếu secret.
@@ -91,8 +89,6 @@ python3 scripts/set_webhook.py --url "$FUNCTION_URL"
 Kiểm tra khối được in ra: `URL` phải trùng `WebhookFunctionUrl`, `Allowed updates` phải có đủ ba loại update, và không có dòng `Lỗi gần nhất từ Telegram`.
 
 Tuỳ chọn khác: `--drop-pending` bỏ các update Telegram đang giữ trong lúc webhook không hoạt động; `--delete` gỡ webhook.
-
-<!-- TODO screenshot: output terminal của set_webhook.py với khối getWebhookInfo (làm mờ một phần URL) -->
 
 #### Bước 4: Cài menu cho bot
 
@@ -147,7 +143,5 @@ export TELEGRAM_WEBHOOK_SECRET=$(aws ssm get-parameter --region "$AWS_REGION" \
 {{% notice note %}}
 Function `worker` và `worker-dlq` lấy token từ tham số deploy `TelegramBotToken` (5.3), không lấy từ SSM. Khi đổi token, hãy cập nhật SSM **và** deploy lại với `TelegramBotToken` mới cùng đủ bộ tham số, kể cả `AiImageUri`.
 {{% /notice %}}
-
-<!-- TODO(not verified): sau khi đổi token hoặc secret trong SSM, các execution environment `webhook` và `ai` đang ấm còn giữ giá trị cũ bao lâu (chúng chỉ đọc SSM một lần, lúc init hoặc lần dùng đầu). Nếu bot vẫn dùng giá trị cũ, hãy đổi cấu hình function để Lambda tạo environment mới, hoặc chờ environment mới. -->
 
 Đến đây bot đã chạy thông từ đầu đến cuối trên AWS.

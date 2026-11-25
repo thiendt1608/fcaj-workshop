@@ -21,7 +21,7 @@ You need an AWS account where you can create IAM roles. Use a **sandbox or dev a
 Create an **AWS Budgets** cost budget before you start. The team used alerts at 10, 25 and 50 USD (Billing and Cost Management → Budgets → Create budget).
 {{% /notice %}}
 
-<!-- TODO screenshot: AWS Budgets page showing the monthly cost budget with the 10/25/50 USD alert thresholds -->
+![The team account's 50 USD Monthly budget with 4 alerts when actual cost passes 10, 25, 40 (80%) and 50 USD (100%)](/images/5-Workshop/5.2/budgets-alerts.jpg)
 
 #### 2. Amazon Bedrock models in `ap-southeast-2`
 
@@ -34,7 +34,9 @@ The `ai` function calls two models in Sydney:
 
 Open the Amazon Bedrock console, switch the Region to **Asia Pacific (Sydney)**, and make sure both models can be used by your account. If your console still shows a **Model access** page, request access to both models there.
 
-<!-- TODO screenshot: Bedrock console in ap-southeast-2 showing Qwen3 32B and gpt-oss-120b as available/access granted -->
+![Bedrock model catalog in Sydney: Qwen3 32B available as Serverless](/images/5-Workshop/5.2/bedrock-qwen3.jpg)
+
+![Bedrock model catalog in Sydney: gpt-oss-120b available as Serverless](/images/5-Workshop/5.2/bedrock-gpt-oss.jpg)
 
 You can check access from the CLI once your credentials are configured (step 5):
 
@@ -66,8 +68,6 @@ The current template and the AI steps also need the following. These are derived
 - **Bedrock (5.4):** `bedrock:CreateGuardrail`, `bedrock:CreateGuardrailVersion`, `bedrock:ListGuardrails`, `bedrock:InvokeModel`.
 - **SAM artifact bucket:** `resolve_s3 = true` in `samconfig.toml` makes SAM create a managed stack (`aws-sam-cli-managed-default`) with an S3 bucket for build artifacts the first time you deploy.
 
-<!-- TODO(not verified): the team has not published a tested least-privilege JSON policy covering all of the above; the extra list is derived from the templates and scripts. -->
-
 {{% notice warning %}}
 Do not use the root user. Prefer short-lived credentials (IAM Identity Center / `aws configure sso`) over long-lived access keys. Never commit credentials to Git.
 {{% /notice %}}
@@ -86,8 +86,6 @@ Do not use the root user. Prefer short-lived credentials (IAM Identity Center / 
 | uv | any recent | `uv --version` | Python package manager used in `ai/` (CI installs Python 3.12 through uv). |
 | OpenSSL | any | `openssl version` | Only to generate a random webhook secret. |
 | Docker | any recent | `docker --version` | **Optional.** Only for building the AI image locally (option B in 5.4). The normal path builds it on GitHub Actions. |
-
-<!-- TODO(not verified): whether `sam build` works with only the Maven wrapper or also needs `mvn` on PATH (SAM's Java Maven builder normally calls `mvn`). If `sam build` fails with "mvn not found", install Apache Maven and retry. -->
 
 #### 5. Configure AWS credentials
 

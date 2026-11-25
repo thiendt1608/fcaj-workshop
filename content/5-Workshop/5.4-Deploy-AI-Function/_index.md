@@ -45,9 +45,6 @@ gh variable set AWS_AI_IMAGE_ROLE_ARN --body "$(aws cloudformation describe-stac
 
 `gh` uses the repository of the current clone. Add `--repo <GITHUB_OWNER>/<REPO>` if it points elsewhere.
 
-<!-- TODO screenshot: CloudFormation stack askfirst-github-oidc in CREATE_COMPLETE, Outputs tab with AiImagePushRoleArn and AiImageRepoUri (account ID blurred) -->
-<!-- TODO screenshot: GitHub fork → Settings → Secrets and variables → Actions → Variables, showing AWS_AI_IMAGE_ROLE_ARN (value blurred) -->
-
 #### Step 2 (optional): Create your own Bedrock Guardrail
 
 The `guardrail.id` in `ai/config/models.yaml` belongs to the team's Bedrock account, so it will not work in yours. Without a working guardrail the pipeline **skips** the guardrail check and still runs. To enable it in your account (Region `ap-southeast-2`):
@@ -60,8 +57,6 @@ cd ..
 ```
 
 The script prints a line of the form `guardrail: {id: "<GUARDRAIL_ID>", version: "<VERSION>", ...}`. Put `<GUARDRAIL_ID>` and `<VERSION>` into the `guardrail:` line of `ai/config/models.yaml`. This file is baked into the image, so this edit must be committed **before** step 4.
-
-<!-- TODO screenshot: Bedrock console (ap-southeast-2) → Guardrails, showing askfirst-guard with its version -->
 
 #### Step 3: Upload model files and the knowledge-base index to S3
 
@@ -135,8 +130,6 @@ export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-
 
 ![The AI image workflow on a pull request: build, the ≤ 2 GB size check, library imports and the handler smoke test via Lambda RIE are all green; the ECR push and Push steps are skipped because they only run on manual workflow_dispatch. The team repo has not run workflow_dispatch yet, so there is no Deploy screenshot](/images/5-Workshop/5.4/github-actions-ai-image.jpg)
 ![ECR console: pushed images tagged by commit. The team's current dev environment uses the repository askfirst-dev-ai, not the askfirst-ai name the askfirst-github-oidc stack creates](/images/5-Workshop/5.4/ecr-images.jpg)
-
-<!-- TODO(not verified): building locally with `docker build -f ai/Dockerfile -t askfirst-ai .` (add `--platform linux/amd64` on Apple Silicon) and pushing with docker login/tag/push like the workflow's Push step. The Dockerfile says to build on GitHub Actions; the team has not used the local path. -->
 
 #### Step 5: Deploy the stack with the AI image
 

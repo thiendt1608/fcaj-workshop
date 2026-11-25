@@ -78,8 +78,6 @@ UNAUTHORIZED
 401
 ```
 
-<!-- TODO screenshot: the with-secret case (IGNORED / 200) or verify-dev.sh with all [PASS] -->
-
 #### Step 3: Register the webhook with Telegram
 
 `scripts/set_webhook.py` calls the Telegram Bot API `setWebhook` with the Function URL and the secret, subscribes to the updates `message`, `callback_query` and `my_chat_member`, then prints `getWebhookInfo`. It reads `TELEGRAM_BOT_TOKEN` and `TELEGRAM_WEBHOOK_SECRET` from the environment (exported above). It refuses to register a webhook without a secret.
@@ -91,8 +89,6 @@ python3 scripts/set_webhook.py --url "$FUNCTION_URL"
 Check the printed block: `URL` must equal your `WebhookFunctionUrl`, `Allowed updates` must list the three update types, and there must be no `Lỗi gần nhất từ Telegram` (last error from Telegram) line.
 
 Other options: `--drop-pending` discards updates Telegram queued while the webhook was down; `--delete` removes the webhook.
-
-<!-- TODO screenshot: terminal output of set_webhook.py with the getWebhookInfo block (URL partly blurred) -->
 
 #### Step 4: Set the bot menu
 
@@ -147,7 +143,5 @@ export TELEGRAM_WEBHOOK_SECRET=$(aws ssm get-parameter --region "$AWS_REGION" \
 {{% notice note %}}
 The `worker` and `worker-dlq` functions get the token from the deploy parameter `TelegramBotToken` (5.3), not from SSM. When you change the token, update SSM **and** deploy again with the new `TelegramBotToken` and the full parameter set, including `AiImageUri`.
 {{% /notice %}}
-
-<!-- TODO(not verified): after a token or secret change in SSM, how long warm `webhook` and `ai` execution environments keep the old value (they read SSM once, at init or first use). If the bot still uses the old value, publish a configuration change or wait for new environments. -->
 
 The bot is now running end to end on AWS.

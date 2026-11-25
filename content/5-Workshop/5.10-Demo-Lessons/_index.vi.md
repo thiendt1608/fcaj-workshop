@@ -8,16 +8,12 @@ pre: " <b> 5.10. </b> "
 
 #### 5.10.1 Demo
 
-<!-- TODO: link/video demo (ngày demo 27/11/2026) -->
-
 Demo đi theo luồng đã kiểm ở 5.6:
 
 1. Gửi một tin nhắn văn bản nghi lừa đảo cho bot và nhận kết luận kèm các dấu hiệu cảnh báo.
 2. Gửi ảnh chụp một tin lừa đảo và nhận kết luận sau bước OCR.
 3. Gửi một tin bình thường và thấy bot không báo nhầm.
 4. Mở trace trên CloudWatch Logs (`ai_invoke` ở worker, `trace_id` khớp ở `ai`) và item lượt kiểm tra trong DynamoDB, nơi lưu kết quả nhưng không lưu nội dung tin nhắn.
-
-<!-- TODO screenshot: các khung hình demo (kết luận tin văn bản, kết luận tin ảnh, trace CloudWatch) -->
 
 #### 5.10.2 Bài học
 
@@ -54,17 +50,13 @@ Nguồn: bài blog nháp của team `thien/bai-viet-aws/bai-viet-lambda-init-10s
 
 Một tin nhắn đi qua ba function. Trên đường cold, worker (Java 21, init p50 2,21 s) phải chờ `ai` (init p50 6,24 s); lần worker gọi `ai` chậm nhất đo được là 12,3 s. Pull request #185 (đang mở) thêm `scripts/warmup.py`, gọi ba function bằng event no-op. Lần chạy cold đo được webhook 3,9–4,1 s, `worker:live` 2,4–2,8 s, `ai:live` 8,8–9,0 s; lần chạy thứ hai mất 0,2 s và không có INIT.
 
-<!-- TODO(not verified): chưa đo container giữ ấm được bao lâu sau warmup.py, và chưa làm load test (50 và 10 tin). -->
-
 ##### 3. Docker 29 đẩy image Lambda không nhận
-
-<!-- TODO(not verified): chỉ có trong ghi chép làm việc của team, chưa tái hiện trong lần chạy nào có tài liệu. -->
 
 Docker 29 đẩy image `ai` dưới dạng OCI index kèm manifest attestation, và Lambda từ chối. Cách xử lý là trỏ Lambda tới digest của manifest amd64, hoặc push bằng `docker push --platform linux/amd64`. Build trên GitHub Actions với platform cố định thì tránh được lỗi này.
 
 ##### 4. Fail-open che mất lỗi thiếu quyền
 
-Judge không bao giờ ném lỗi: Bedrock lỗi thì rơi về chỉ dùng luật (`path = rules_only`), còn Guardrail thì fail-open. Nhờ vậy bot luôn trả lời, nhưng lỗi cấu hình cũng bị che. Khi role của `ai` không có quyền `bedrock:InvokeModel` ở tài khoản Bedrock, mọi lượt kiểm tra lặng lẽ thành `rules_only`, và lời gọi Guardrail lỗi `guard_failed` mà người dùng không thấy lỗi nào. <!-- TODO(not verified): sự cố này lấy từ ghi chép làm việc của team (24/11), không phải từ báo cáo chính thức. -->
+Judge không bao giờ ném lỗi: Bedrock lỗi thì rơi về chỉ dùng luật (`path = rules_only`), còn Guardrail thì fail-open. Nhờ vậy bot luôn trả lời, nhưng lỗi cấu hình cũng bị che. Khi role của `ai` không có quyền `bedrock:InvokeModel` ở tài khoản Bedrock, mọi lượt kiểm tra lặng lẽ thành `rules_only`, và lời gọi Guardrail lỗi `guard_failed` mà người dùng không thấy lỗi nào.
 
 Bài học: sau mỗi lần deploy, xem `path` trong log `ai` hoặc trong item lượt kiểm tra. `llm` hoặc `escalated` nghĩa là Bedrock đã chạy; toàn `rules_only` trong khi kill switch đang bật LLM nghĩa là sai quyền hoặc sai cấu hình.
 

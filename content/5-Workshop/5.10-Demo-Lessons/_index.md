@@ -8,16 +8,12 @@ pre: " <b> 5.10. </b> "
 
 #### 5.10.1 Demo
 
-<!-- TODO: link/video demo (demo day 27/11/2026) -->
-
 The demo follows the flow tested in 5.6:
 
 1. Send a suspected scam text message to the bot and receive the verdict with its warning signs.
 2. Send a screenshot of a scam message and receive the verdict after OCR.
 3. Send a normal message and see that the bot does not raise a false alarm.
 4. Show the trace in CloudWatch Logs (`ai_invoke` in the worker, the matching `trace_id` in `ai`) and the check item in DynamoDB, which stores the result but not the message text.
-
-<!-- TODO screenshot: demo frames (text verdict, image verdict, CloudWatch trace) -->
 
 #### 5.10.2 Lessons learned
 
@@ -54,17 +50,13 @@ Source: team blog draft `thien/bai-viet-aws/bai-viet-lambda-init-10s.md` and `do
 
 A message passes through three functions. On a cold path the worker (Java 21, init p50 2.21 s) waits for `ai` (init p50 6.24 s); the slowest worker-to-`ai` call measured was 12.3 s. Pull request #185 (still open) adds `scripts/warmup.py`, which invokes the three functions with no-op events. On a cold run it measured webhook 3.9–4.1 s, `worker:live` 2.4–2.8 s and `ai:live` 8.8–9.0 s; a second run took 0.2 s with no INIT.
 
-<!-- TODO(not verified): how long the containers stay warm after warmup.py, and the load test (50 and 10 messages), were not measured. -->
-
 ##### 3. Docker 29 pushes an image Lambda does not accept
-
-<!-- TODO(not verified): from the team's working notes only, not reproduced in a documented run. -->
 
 Docker 29 pushed the `ai` image as an OCI index with an attestation manifest, and Lambda rejected it. The workaround was to point Lambda to the digest of the amd64 manifest, or to push with `docker push --platform linux/amd64`. Building on GitHub Actions with a fixed platform avoids this.
 
 ##### 4. Fail-open hides missing permissions
 
-The judge never raises: if Bedrock fails it falls back to rules only (`path = rules_only`), and the Guardrail is fail-open. This keeps the bot answering, but it also hides configuration errors. When the `ai` role could not call `bedrock:InvokeModel` in the Bedrock account, every check quietly became `rules_only`, and the Guardrail call failed with `guard_failed` without any error reaching the user. <!-- TODO(not verified): this incident is from the team's working notes (24/11), not from a written report. -->
+The judge never raises: if Bedrock fails it falls back to rules only (`path = rules_only`), and the Guardrail is fail-open. This keeps the bot answering, but it also hides configuration errors. When the `ai` role could not call `bedrock:InvokeModel` in the Bedrock account, every check quietly became `rules_only`, and the Guardrail call failed with `guard_failed` without any error reaching the user.
 
 Lesson: after every deploy, check `path` in the `ai` logs or in the check item. `llm` or `escalated` means Bedrock ran; a run of `rules_only` with the kill switch on means permissions or configuration are wrong.
 

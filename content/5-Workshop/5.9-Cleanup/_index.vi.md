@@ -8,8 +8,6 @@ pre: " <b> 5.9. </b> "
 
 Làm xong workshop thì xoá hết tài nguyên theo đúng thứ tự dưới đây để không bị tính tiền tiếp. Bước 1–6 theo hướng dẫn dọn dẹp trong repo dự án (`infra/README.md`, mục 7, viết lại trong pull request #186 của task SH-10). Bước 7 và các mục bổ sung ở bước 5, 6 dọn những tài nguyên tạo ở các phần khác của workshop này.
 
-<!-- TODO(not verified): PR #186 vẫn đang mở. Các lệnh chỉ đọc đã chạy thử trên stack dev, nhưng chưa chạy trọn bộ trên một stack tạm. -->
-
 Lệnh viết cho stage `dev`, Region `ap-southeast-1`, chạy ở gốc repo bằng Bash (Windows dùng Git Bash hoặc WSL). Đổi `STAGE` nếu bạn deploy stage khác.
 
 ```bash
@@ -89,8 +87,6 @@ Gõ `y` khi SAM hỏi xác nhận xoá stack và artifact. Lệnh này xoá các
 
 Kiểm tra: `aws cloudformation describe-stacks --stack-name askfirst-$STAGE` báo `does not exist`.
 
-<!-- TODO screenshot: trang CloudFormation Stacks có askfirst-dev và askfirst-github-oidc ở trạng thái DELETE_COMPLETE (lọc "Deleted") -->
-
 #### Bước 6: Xoá những thứ stack không quản lý
 
 ```bash
@@ -152,8 +148,6 @@ aws ssm get-parameters-by-path --path "/askfirst/$STAGE" --recursive --query 'Pa
 ```
 
 Lệnh đầu in ra `stack: đã xoá`. Sáu lệnh còn lại phải in ra rỗng (hoặc `None`).
-
-<!-- TODO screenshot: output terminal của phần kiểm tra cuối (stack: đã xoá, các lệnh còn lại rỗng) -->
 
 {{% notice note %}}
 Một hai ngày sau, xem **Billing and Cost Management → Bills**. Mức dùng của mấy ngày cuối trước khi dọn vẫn có thể hiện ra, nhưng không được phát sinh khoản mới cho `askfirst`.

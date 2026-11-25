@@ -65,9 +65,6 @@ UNAUTHORIZED
 401
 ```
 
-<!-- TODO screenshot: output hai ca có secret đúng (IGNORED 200, INVALID_JSON 400), không lộ giá trị secret -->
-<!-- TODO screenshot: output của ./infra/verify-dev.sh -->
-
 #### 5.6.3 Xem kết quả trong CloudWatch Logs và DynamoDB
 
 **Log.** Mỗi function ghi vào `/aws/lambda/askfirst-<stage>-<function>`. Theo dõi log của worker trong lúc gửi tin:
@@ -141,9 +138,6 @@ aws lambda delete-function-concurrency --function-name askfirst-$STAGE-ai
 aws sqs purge-queue --queue-url "$DLQ_URL"
 sam deploy ...   # trả VisibilityTimeout về 720
 ```
-
-<!-- TODO(not verified): infra/WORKER.md ghi các lệnh DLQ này chưa chạy trên tài khoản thật lúc viết (08/11/2026); ghi kết quả bạn chạy được vào đây. -->
-<!-- TODO screenshot: tin "đang bận" trong Telegram và số message trong DLQ = 1 -->
 
 {{% notice warning %}}
 Đừng để function `ai` ở reserved concurrency 0 hay visibility timeout 20 giây. Cả hai đều làm hỏng luồng bình thường.

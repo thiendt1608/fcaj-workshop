@@ -21,7 +21,7 @@ Bạn cần một tài khoản AWS có quyền tạo IAM role. Nên dùng **tài
 Tạo **AWS Budgets** trước khi bắt đầu. Team đặt cảnh báo ở các mức 10, 25 và 50 USD (Billing and Cost Management → Budgets → Create budget).
 {{% /notice %}}
 
-<!-- TODO screenshot: trang AWS Budgets có budget chi phí hằng tháng với các ngưỡng cảnh báo 10/25/50 USD -->
+![Budget Monthly 50 USD của tài khoản team với 4 cảnh báo khi chi phí thực vượt 10, 25, 40 (80%) và 50 USD (100%)](/images/5-Workshop/5.2/budgets-alerts.jpg)
 
 #### 2. Model Amazon Bedrock ở `ap-southeast-2`
 
@@ -34,7 +34,9 @@ Function `ai` gọi hai model ở Sydney:
 
 Mở Amazon Bedrock console, đổi Region sang **Asia Pacific (Sydney)** và đảm bảo tài khoản dùng được cả hai model. Nếu console của bạn vẫn còn trang **Model access**, hãy request access cho cả hai model ở đó.
 
-<!-- TODO screenshot: Bedrock console ở ap-southeast-2 cho thấy Qwen3 32B và gpt-oss-120b đã dùng được/đã được cấp quyền -->
+![Model catalog của Bedrock ở Sydney: Qwen3 32B có sẵn dạng Serverless](/images/5-Workshop/5.2/bedrock-qwen3.jpg)
+
+![Model catalog của Bedrock ở Sydney: gpt-oss-120b có sẵn dạng Serverless](/images/5-Workshop/5.2/bedrock-gpt-oss.jpg)
 
 Sau khi cấu hình credentials (bước 5), có thể kiểm tra bằng CLI:
 
@@ -66,8 +68,6 @@ Template hiện tại và các bước AI còn cần thêm những quyền dư�
 - **Bedrock (5.4):** `bedrock:CreateGuardrail`, `bedrock:CreateGuardrailVersion`, `bedrock:ListGuardrails`, `bedrock:InvokeModel`.
 - **Bucket artifact của SAM:** `resolve_s3 = true` trong `samconfig.toml` khiến SAM tự tạo một managed stack (`aws-sam-cli-managed-default`) có S3 bucket chứa artifact build ở lần deploy đầu tiên.
 
-<!-- TODO(not verified): team chưa công bố policy JSON least-privilege đã kiểm thử bao trọn các quyền trên; danh sách bổ sung được suy ra từ template và script. -->
-
 {{% notice warning %}}
 Không dùng root user. Ưu tiên credentials ngắn hạn (IAM Identity Center / `aws configure sso`) thay vì access key dài hạn. Tuyệt đối không commit credentials vào Git.
 {{% /notice %}}
@@ -86,8 +86,6 @@ Không dùng root user. Ưu tiên credentials ngắn hạn (IAM Identity Center 
 | uv | bản mới | `uv --version` | Trình quản lý package Python dùng trong `ai/` (CI cài Python 3.12 qua uv). |
 | OpenSSL | bản bất kỳ | `openssl version` | Chỉ để sinh webhook secret ngẫu nhiên. |
 | Docker | bản mới | `docker --version` | **Tuỳ chọn.** Chỉ cần khi build AI image trên máy (cách B ở 5.4). Cách chính là build trên GitHub Actions. |
-
-<!-- TODO(not verified): `sam build` chạy được chỉ với Maven wrapper hay cần thêm `mvn` trên PATH (Java Maven builder của SAM thường gọi `mvn`). Nếu `sam build` báo không tìm thấy `mvn`, hãy cài Apache Maven rồi chạy lại. -->
 
 #### 5. Cấu hình AWS credentials
 

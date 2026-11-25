@@ -68,8 +68,6 @@ sam build
 
 SAM đọc `infra/template.yaml`, build các function Java 21 từ `backend/ScamProtection/webhook-handler/` và `backend/ScamProtection/worker/`, rồi ghi kết quả vào `infra/.aws-sam/build`. Output phải kết thúc bằng `Build Succeeded`.
 
-<!-- TODO screenshot: output terminal của `sam build` kết thúc bằng "Build Succeeded" -->
-
 #### Bước 5: Deploy stack
 
 `infra/samconfig.toml` đã có sẵn cấu hình deploy cho `dev`: `stack_name = "askfirst-dev"`, `region = "ap-southeast-1"`, `capabilities = "CAPABILITY_IAM"`, `resolve_s3 = true`, `confirm_changeset = false`.
@@ -99,7 +97,6 @@ sam deploy --parameter-overrides \
 
 Nếu muốn xem lại từng thiết lập, chạy `sam deploy --guided` và trả lời: Stack Name `askfirst-dev`, Region `ap-southeast-1`, Parameter Stage `dev`, Allow SAM CLI IAM role creation `Y`, **"WebhookFunction has no authentication. Is this okay?" `Y`** (Function URL bắt buộc công khai; header secret được kiểm tra bên trong function), Save arguments to configuration file `Y`.
 
-<!-- TODO screenshot: output terminal của `sam deploy` với các CloudFormation event và dòng "Successfully created/updated stack - askfirst-dev" -->
 ![Stack askfirst-dev, tab Resources: 23 resource đều CREATE_COMPLETE. Stack đã được update nhiều lần nên trạng thái stack là UPDATE_COMPLETE](/images/5-Workshop/5.3/cfn-stack-resources.jpg)
 
 #### Bước 6: Lấy output của stack

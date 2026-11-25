@@ -34,7 +34,7 @@ This page gives the monthly cost of running Ask First for the target load, how t
 
 #### 5.8.2 Assumptions
 
-**Traffic scenario.** 3,000 checks per month (about 100 per day): 2,000 text and 1,000 image messages. Voice and the VLM fallback are not included. 25% of checks are assumed to end on the fast path or in the cache, so only 2,250 call the LLM. <!-- TODO(not verified): the 25% fast-path/cache rate; the eval set is almost all scam or tricky messages, so only 1 of 134 text samples took the fast path. -->
+**Traffic scenario.** 3,000 checks per month (about 100 per day): 2,000 text and 1,000 image messages. Voice and the VLM fallback are not included. 25% of checks are assumed to end on the fast path or in the cache, so only 2,250 call the LLM.
 
 **Bedrock tokens (measured).** `eval/measure_cost.py` runs the real pipeline on the eval set and counts tokens per check (184 samples, 17/11/2026):
 

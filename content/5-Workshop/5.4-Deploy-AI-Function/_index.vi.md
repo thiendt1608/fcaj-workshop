@@ -45,9 +45,6 @@ gh variable set AWS_AI_IMAGE_ROLE_ARN --body "$(aws cloudformation describe-stac
 
 `gh` dùng repo của bản clone hiện tại. Thêm `--repo <GITHUB_OWNER>/<REPO>` nếu nó trỏ sang repo khác.
 
-<!-- TODO screenshot: stack CloudFormation askfirst-github-oidc ở trạng thái CREATE_COMPLETE, tab Outputs có AiImagePushRoleArn và AiImageRepoUri (làm mờ account ID) -->
-<!-- TODO screenshot: GitHub fork → Settings → Secrets and variables → Actions → Variables, có AWS_AI_IMAGE_ROLE_ARN (làm mờ giá trị) -->
-
 #### Bước 2 (tuỳ chọn): Tạo Bedrock Guardrail riêng
 
 `guardrail.id` trong `ai/config/models.yaml` thuộc tài khoản Bedrock của team nên sẽ không dùng được trong tài khoản của bạn. Khi guardrail gọi lỗi, pipeline **bỏ qua** bước guardrail và vẫn chạy tiếp. Để bật guardrail trong tài khoản của bạn (Region `ap-southeast-2`):
@@ -60,8 +57,6 @@ cd ..
 ```
 
 Script in ra một dòng dạng `guardrail: {id: "<GUARDRAIL_ID>", version: "<VERSION>", ...}`. Điền `<GUARDRAIL_ID>` và `<VERSION>` vào dòng `guardrail:` trong `ai/config/models.yaml`. File này được đóng vào image, nên phải commit thay đổi **trước** bước 4.
-
-<!-- TODO screenshot: Bedrock console (ap-southeast-2) → Guardrails, thấy askfirst-guard và version -->
 
 #### Bước 3: Upload file model và index knowledge base lên S3
 
@@ -135,8 +130,6 @@ export AI_IMAGE_URI="<ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/askfirst-
 
 ![Workflow AI image chạy trên pull request: build, kiểm dung lượng ≤ 2 GB, import thư viện, gọi thử handler qua Lambda RIE đều xanh; hai bước Đẩy lên ECR và Push bị bỏ qua vì chỉ chạy khi bấm tay (workflow_dispatch). Repo của nhóm chưa chạy workflow_dispatch nên chưa có ảnh bước Deploy](/images/5-Workshop/5.4/github-actions-ai-image.jpg)
 ![ECR console: các image đã đẩy, tag theo commit. Môi trường dev hiện tại của nhóm dùng repository askfirst-dev-ai, khác tên askfirst-ai mà stack askfirst-github-oidc tạo](/images/5-Workshop/5.4/ecr-images.jpg)
-
-<!-- TODO(not verified): build trên máy bằng `docker build -f ai/Dockerfile -t askfirst-ai .` (thêm `--platform linux/amd64` trên Apple Silicon) rồi docker login/tag/push như bước Push của workflow. Dockerfile ghi là build trên GitHub Actions; team chưa dùng cách build trên máy. -->
 
 #### Bước 5: Deploy stack kèm AI image
 

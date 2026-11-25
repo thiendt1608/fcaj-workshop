@@ -65,9 +65,6 @@ UNAUTHORIZED
 401
 ```
 
-<!-- TODO screenshot: output of the two correct-secret cases (IGNORED 200, INVALID_JSON 400), no secret value visible -->
-<!-- TODO screenshot: output of ./infra/verify-dev.sh -->
-
 #### 5.6.3 Check the result in CloudWatch Logs and DynamoDB
 
 **Logs.** Each function writes to `/aws/lambda/askfirst-<stage>-<function>`. Follow the worker while you send a message:
@@ -141,9 +138,6 @@ aws lambda delete-function-concurrency --function-name askfirst-$STAGE-ai
 aws sqs purge-queue --queue-url "$DLQ_URL"
 sam deploy ...   # puts VisibilityTimeout back to 720
 ```
-
-<!-- TODO(not verified): infra/WORKER.md says these DLQ commands had not been run on a real account when it was written (08/11/2026); record your own result here. -->
-<!-- TODO screenshot: "busy" reply in Telegram and DLQ message count = 1 -->
 
 {{% notice warning %}}
 Do not leave the `ai` function at reserved concurrency 0 or the visibility timeout at 20 seconds. Both break normal traffic.

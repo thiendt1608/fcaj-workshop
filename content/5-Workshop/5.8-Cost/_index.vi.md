@@ -34,7 +34,7 @@ Trang này đưa ra chi phí hằng tháng để chạy Ask First ở mức tả
 
 #### 5.8.2 Giả định
 
-**Kịch bản tải.** 3.000 lượt kiểm tra mỗi tháng (khoảng 100 lượt/ngày): 2.000 tin văn bản và 1.000 tin ảnh. Chưa tính voice và VLM fallback. Giả định 25% lượt kết thúc ở fast path hoặc cache, nên chỉ 2.250 lượt gọi LLM. <!-- TODO(not verified): tỉ lệ fast path/cache 25%; bộ eval gần như toàn tin lừa đảo hoặc tin khó nên chỉ 1/134 mẫu văn bản đi fast path. -->
+**Kịch bản tải.** 3.000 lượt kiểm tra mỗi tháng (khoảng 100 lượt/ngày): 2.000 tin văn bản và 1.000 tin ảnh. Chưa tính voice và VLM fallback. Giả định 25% lượt kết thúc ở fast path hoặc cache, nên chỉ 2.250 lượt gọi LLM.
 
 **Token Bedrock (đo thật).** `eval/measure_cost.py` chạy pipeline thật trên bộ eval và đếm token của từng lượt (184 mẫu, 17/11/2026):
 

@@ -118,7 +118,6 @@ sam deploy --parameter-overrides Stage=dev AlarmTopicArn="$TOPIC_ARN" ...   # ke
 ```
 
 The team's dev stack is currently deployed with an empty `AlarmTopicArn`, so the DLQ alarm has no actions (checked 25/11/2026). Follow the steps above to get email alerts.
-<!-- TODO screenshot: SNS subscription confirmed + alarm email received -->
 
 #### 5.7.6 Gaps you should know about
 
