@@ -9,7 +9,6 @@ pre: " <b> 1. </b> "
 This is my personal worklog for the 12-week internship. I am AI1 on the team project **Ask First (Hỏi Trước)**, a bot that helps people ask before acting on a suspicious message. My main work is the AI pipeline on AWS Lambda: rules, RAG, a judge on Amazon Bedrock, OCR for images, the eval set and the ADRs.
 
 Each week is logged by day, with links to PRs, issues or docs in the [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first) repo. Weeks 1–5 (before the project repo existed) have no PRs to link, so the references are AWS docs and project docs; week 12 is the plan.
-<!-- TODO(confirm): whether to disclose use of an AI assistant (Claude Code) for code and docs (see bao-cao-claude-w2.md, check FCAJ rules) -->
 
 **Week 1:** [Getting started with FCAJ, the AWS account and cloud basics](1.1-week1/)
 

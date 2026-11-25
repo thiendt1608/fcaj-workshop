@@ -9,7 +9,6 @@ pre: " <b> 1. </b> "
 Đây là nhật ký công việc cá nhân của tôi trong 12 tuần thực tập. Tôi giữ vai trò AI1 trong dự án nhóm **Hỏi Trước (Ask First)**, một bot giúp người dùng hỏi trước khi làm theo tin nhắn đáng ngờ. Phần việc chính của tôi là pipeline AI trên AWS Lambda: luật, RAG, judge dùng Amazon Bedrock, OCR cho ảnh, bộ eval và các ADR.
 
 Mỗi tuần ghi theo ngày, kèm link PR, issue hoặc tài liệu trong repo [ask-first-fcaj/ask-first](https://github.com/ask-first-fcaj/ask-first). Tuần 1–5 (trước khi có repo dự án) chưa có PR để link, nên nguồn là tài liệu AWS và tài liệu dự án; tuần 12 là kế hoạch.
-<!-- TODO(confirm): có cần ghi rõ việc dùng trợ lý AI (Claude Code) khi viết code và tài liệu không (xem bao-cao-claude-w2.md, kiểm quy định của FCAJ) -->
 
 **Tuần 1:** [Làm quen FCAJ, tài khoản AWS và tổng quan cloud](1.1-week1/)
 
