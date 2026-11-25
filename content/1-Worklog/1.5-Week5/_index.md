@@ -5,7 +5,6 @@ weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 5: 12/10/2026 – 16/10/2026.
 <!-- TODO: no evidence in the project repo for this week (its first commit is 18/10/2026); fill in from your own notes, do not invent -->

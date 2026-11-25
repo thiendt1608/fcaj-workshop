@@ -5,7 +5,6 @@ weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 8: 02/11/2026 – 06/11/2026 (project week W3; milestone M1 "Text E2E" due 06/11).
 

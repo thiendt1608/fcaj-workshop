@@ -5,7 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 This is my personal worklog for the 12-week internship. I am AI1 on the team project **Ask First (Hỏi Trước)**, a bot that helps people ask before acting on a suspicious message. My main work is the AI pipeline on AWS Lambda: rules, RAG, a judge on Amazon Bedrock, OCR for images, the eval set and the ADRs.
 

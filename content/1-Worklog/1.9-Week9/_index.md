@@ -5,7 +5,6 @@ weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 9: 09/11/2026 – 13/11/2026 (project week W4).
 

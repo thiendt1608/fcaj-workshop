@@ -5,7 +5,6 @@ weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 7: 26/10/2026 – 30/10/2026 (tuần W2 của dự án). Một phần việc kéo sang thứ Bảy 31/10.
 

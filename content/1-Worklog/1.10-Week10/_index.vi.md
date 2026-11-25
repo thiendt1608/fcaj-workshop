@@ -5,7 +5,6 @@ weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 10: 16/11/2026 – 20/11/2026 (tuần W5 của dự án, mốc M4 MVP freeze hạn 20/11).
 

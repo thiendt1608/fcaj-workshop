@@ -5,7 +5,6 @@ weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 11: 23/11/2026 – 27/11/2026 (tuần W6 của dự án, mốc M6 demo). Tuần này đang diễn ra: nhật ký ghi đến 25/11/2026.
 

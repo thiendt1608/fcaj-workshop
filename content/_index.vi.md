@@ -10,28 +10,27 @@ chapter: false
 
 ### Thông tin sinh viên
 
-&emsp; **Họ và tên:** _(cần điền)_
+&emsp; **Họ và tên:** Nguyễn Nho Chí Thiện
 
-&emsp; **Số điện thoại:** _(cần điền)_
+&emsp; **Số điện thoại:** 0986719762
 
-&emsp; **Email:** _(cần điền)_
+&emsp; **Email:** thiendt1608@gmail.com
 
-&emsp; **Trường:** _(cần điền)_
+&emsp; **Trường:** Đại học FPT (FPT University)
 
-&emsp; **Ngành:** _(cần điền)_
+&emsp; **Ngành:** Kỹ thuật phần mềm (Software Engineering)
 
-&emsp; **Lớp:** _(cần điền)_
+&emsp; **Lớp:** AWS092026
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Vietnam
 
-&emsp; **Vị trí thực tập:** First Cloud AI Journey (FCAJ) — _(cần xác nhận)_
+&emsp; **Vị trí thực tập:** First Cloud AI Journey (FCAJ)
 
-&emsp; **Thời gian thực tập:** Từ ngày _(cần điền)_ đến ngày _(cần điền)_
+&emsp; **Thời gian thực tập:** Từ ngày 14/09/2026 đến ngày 14/12/2026
 
 &emsp; **Dự án nhóm:** Ask First (Hỏi Trước) — Telegram bot giúp người lớn tuổi kiểm tra tin nhắn nghi lừa đảo, chạy serverless trên AWS
 
-<!-- TODO: thêm ảnh đại diện vào static/images/avatar.png rồi bỏ comment dòng dưới -->
-<!-- ![Ảnh đại diện](/images/avatar.png) -->
+<img src="/images/avatar.jpg" alt="Ảnh đại diện" width="240">
 
 ### Nội dung báo cáo
 

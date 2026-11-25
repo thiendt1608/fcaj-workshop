@@ -5,7 +5,6 @@ weight: 10
 chapter: false
 pre: " <b> 1.10. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 10: 16/11/2026 – 20/11/2026 (project week W5; milestone M4 MVP freeze due 20/11).
 

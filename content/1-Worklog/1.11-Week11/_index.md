@@ -5,7 +5,6 @@ weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 11: 23/11/2026 – 27/11/2026 (project week W6, milestone M6 demo). This week is in progress: entries go up to 25/11/2026.
 

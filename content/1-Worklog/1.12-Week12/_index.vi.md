@@ -5,7 +5,6 @@ weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 12: 30/11/2026 – 04/12/2026.
 <!-- TODO: tuần này chưa diễn ra; điền sau khi làm xong -->

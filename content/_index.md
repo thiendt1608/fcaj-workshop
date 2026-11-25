@@ -10,28 +10,27 @@ chapter: false
 
 ### Student information
 
-&emsp; **Full name:** _(to fill in)_
+&emsp; **Full name:** Nguyễn Nho Chí Thiện
 
-&emsp; **Phone:** _(to fill in)_
+&emsp; **Phone:** 0986719762
 
-&emsp; **Email:** _(to fill in)_
+&emsp; **Email:** thiendt1608@gmail.com
 
-&emsp; **University:** _(to fill in)_
+&emsp; **University:** FPT University
 
-&emsp; **Major:** _(to fill in)_
+&emsp; **Major:** Software Engineering
 
-&emsp; **Class:** _(to fill in)_
+&emsp; **Class:** AWS092026
 
 &emsp; **Internship company:** Amazon Web Services Vietnam Co., Ltd.
 
-&emsp; **Position:** First Cloud AI Journey (FCAJ) — _(to confirm)_
+&emsp; **Position:** First Cloud AI Journey (FCAJ)
 
-&emsp; **Internship period:** From _(to fill in)_ to _(to fill in)_
+&emsp; **Internship period:** From 14/09/2026 to 14/12/2026
 
 &emsp; **Team project:** Ask First (Hỏi Trước) — a Telegram bot that helps elderly people check suspected scam messages, running serverless on AWS
 
-<!-- TODO: add your photo at static/images/avatar.png, then uncomment the line below -->
-<!-- ![Avatar](/images/avatar.png) -->
+<img src="/images/avatar.jpg" alt="Avatar" width="240">
 
 ### Report contents
 

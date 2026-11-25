@@ -5,7 +5,6 @@ weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 6: 19/10/2026 – 23/10/2026 (week W1 of the team project Ask First / "Hỏi Trước"; my role is AI1).
 

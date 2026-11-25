@@ -5,7 +5,6 @@ weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 3: 28/09/2026 – 02/10/2026.
 <!-- TODO: repo dự án chưa có bằng chứng cho tuần này (commit đầu tiên là 18/10/2026); điền từ ghi chép của tôi, không bịa -->

@@ -5,7 +5,6 @@ weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Đây là nhật ký công việc cá nhân của tôi trong 12 tuần thực tập. Tôi giữ vai trò AI1 trong dự án nhóm **Hỏi Trước (Ask First)**, một bot giúp người dùng hỏi trước khi làm theo tin nhắn đáng ngờ. Phần việc chính của tôi là pipeline AI trên AWS Lambda: luật, RAG, judge dùng Amazon Bedrock, OCR cho ảnh, bộ eval và các ADR.
 

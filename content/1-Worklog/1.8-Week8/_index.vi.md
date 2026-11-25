@@ -5,7 +5,6 @@ weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Tuần 8: 02/11/2026 – 06/11/2026 (tuần W3 của dự án, mốc M1 "Text E2E" hạn 06/11).
 

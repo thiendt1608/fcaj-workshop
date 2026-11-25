@@ -5,7 +5,6 @@ weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-<!-- TODO(confirm): week mapping assumes the internship started 14/09/2026 -->
 
 Week 7: 26/10/2026 – 30/10/2026 (project week W2). Some work carried over to Saturday 31/10.
 
