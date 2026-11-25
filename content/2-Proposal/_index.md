@@ -164,8 +164,14 @@ Load assumption: **3,000 checks/month**, text and images, no voice. Non-Bedrock 
 
 - **Free Tier:** the account still gets the always-free tiers. November up to 25/11: Lambda ≈ 8,200/400,000 GB-seconds and 273/1M requests, SQS ≈ 178,000/1M requests, CloudWatch alarms 0.37/10. The "With always-free" column holds for this account.
 - **Lambda durations** (CloudWatch `Duration`, 14 days, team test traffic): `ai` 248 invocations, avg 2.7 s, p95 9.7 s; `worker` 73, avg 4.6 s, p95 14.2 s; `webhook` 50, avg 1.0 s, p95 3.0 s. `ai` and `worker` fit within the 5 s entered in the Calculator. `webhook` runs twice the assumed 0.5 s, so that line becomes about 0.06 USD without Free Tier; the total barely moves. Small sample of test traffic, not real load.
-- **Actual spend:** AWS Budgets shows ≈ 0.09 USD for November up to 25/11, forecast ≈ 0.10 USD for the month. This excludes Bedrock, which runs in a different account, and test traffic is far below 3,000 checks/month.
-- **Not checked:** which Guardrails price line AWS bills (0.15 vs 0.08 USD per 1,000 units; the estimate uses 0.15 to be safe), and the per-service breakdown in Cost Explorer. <!-- TODO(not verified): Guardrails price line and Bedrock spend in the Bedrock account -->
+- **Actual spend, dev account:** AWS Budgets shows ≈ 0.09 USD for November up to 25/11, forecast ≈ 0.10 USD for the month (Bedrock not included).
+- **Actual spend, Bedrock account:** AWS Budgets shows ≈ 3.93 USD for November up to 25/11. Recomputed from Bedrock CloudWatch metrics (same period, 0.1545 / 0.618 USD per 1M tokens):
+  - Qwen3 32B: 4,800 calls, 11.8M input tokens, 0.95M output tokens ≈ 2.42 USD.
+  - gpt-oss-120b: 987 calls, 2.5M input tokens, 0.44M output tokens ≈ 0.66 USD.
+  - Guardrails: 3,286 `ApplyGuardrail` calls, 3,288 text units, content filter policy only (`PROMPT_ATTACK`) ≈ 0.26–0.49 USD depending on the price line.
+  - That adds up to ≈ 3.3–3.6 USD; ≈ 0.4–0.6 USD of the Budgets figure is not yet broken down by service.
+  - Most of these calls are the team's eval and test runs, not real users.
+- **Not checked:** which Guardrails price line AWS bills (0.15 vs 0.08 USD per 1,000 units; the estimate uses 0.15 to be safe), and the per-service breakdown in Cost Explorer. <!-- TODO(not verified): Guardrails price line and the ≈ 0.4–0.6 USD gap, needs Cost Explorer by usage type -->
 
 **Cost optimisation**
 
