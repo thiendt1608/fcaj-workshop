@@ -7,14 +7,16 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Chạy model OCR trên AWS Lambda: tối ưu cold start bằng pha INIT và cái bẫy giới hạn 10 giây
+# Test luồng Serverless & Event-Driven (SQS + DLQ + DynamoDB) không tốn $0 trên local với LocalStack + Java 21
 
-**Link bài đăng:** _(cần điền — link AWS Study Group)_
+**Link bài đăng:** [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj/posts/2349976352433990/)
 
-**Tác giả:** _(cần điền)_ · **Ngày đăng:** _(cần điền)_
+**Tác giả:** Ngô Thị Kim Ngân · **Ngày đăng:** 27/11/2026
 
 ### Tóm tắt
-<!-- TODO: 1 đoạn tóm tắt nội dung bài, bằng lời của mình -->
+Bài chia sẻ cách test luồng bất đồng bộ (sự kiện → SQS → Lambda Java 21 → DynamoDB / SSM Parameter Store, có DLQ) ngay trên máy bằng LocalStack trước khi deploy bằng AWS SAM. Mục tiêu là sửa các lỗi nhỏ ở local thay vì sửa trên AWS, vừa nhanh hơn vừa tránh phát sinh chi phí.
 
 ### Điểm chính
-<!-- TODO: 3–5 ý chính -->
+- Trong AWS SDK v2 cho Java, chỉ gọi `endpointOverride` trỏ về `http://localhost:4566` khi chạy chế độ `local`. Lên cloud thì dùng endpoint mặc định.
+- Test cả hai luồng: payload hợp lệ phải ghi được vào DynamoDB và bị xoá khỏi queue chính; payload lỗi phải rơi vào DLQ sau đúng số lần retry đã cấu hình.
+- Chỉ deploy bằng SAM khi logic và cấu hình đã chạy ổn ở local.

@@ -7,14 +7,16 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Running an OCR model on AWS Lambda: cold-start tuning with the INIT phase and the 10-second trap
+# Testing a serverless, event-driven flow (SQS + DLQ + DynamoDB) locally for $0 with LocalStack and Java 21
 
-**Post link:** _(to fill in — AWS Study Group link)_
+**Post link:** [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj/posts/2349976352433990/)
 
-**Author(s):** _(to fill in)_ · **Published:** _(to fill in)_
+**Author(s):** Ngô Thị Kim Ngân · **Published:** November 27, 2026
 
 ### Summary
-<!-- TODO: one-paragraph summary in your own words -->
+The post shows how to test an asynchronous flow (event → SQS → Java 21 Lambda → DynamoDB / SSM Parameter Store, with a DLQ) on a local machine with LocalStack before deploying with AWS SAM. The aim is to fix small bugs locally instead of on AWS, which is faster and avoids unexpected charges.
 
 ### Key points
-<!-- TODO: 3–5 key points -->
+- In the AWS SDK for Java v2, call `endpointOverride` with `http://localhost:4566` only in `local` mode. In the cloud, use the default endpoint.
+- Test both paths: a valid payload must be written to DynamoDB and deleted from the main queue; a failing payload must land in the DLQ after the configured number of retries.
+- Deploy with SAM only after the logic and configuration work locally.
